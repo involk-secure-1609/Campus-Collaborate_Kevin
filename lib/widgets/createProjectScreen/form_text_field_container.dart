@@ -7,12 +7,15 @@ class FormTextFieldContainer extends StatelessWidget {
   final String hintText;
   final TextEditingController textEditingController;
   final int? maxLines;
+  final String?Function(String?)? validator;
   const FormTextFieldContainer(
       {super.key,
       required this.hintText,
       required this.title,
       required this.textEditingController,
-      this.maxLines});
+      this.maxLines,
+        this.validator
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class FormTextFieldContainer extends StatelessWidget {
             color: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
             borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
-          child: TextField(
+          child: TextFormField(
             decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(12),
                 border: InputBorder.none,
@@ -45,6 +48,12 @@ class FormTextFieldContainer extends StatelessWidget {
             cursorColor: Themes.getColors(ColorsValues.ORANGE_COLOR),
             style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
             maxLines: maxLines ?? 1,
+            validator: validator ?? (val){
+              if(val==null||val.isEmpty){
+                return 'This field cannot remain empty';
+              }
+              return null;
+            },
           ),
         ),
         const SizedBox(

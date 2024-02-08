@@ -29,17 +29,17 @@ class CreateProjectModel{
   });
 
   Map<String, dynamic> toJson(CreateProjectModel instance) => <String, dynamic>{
-    'projectName': instance.projectName,
-    'description': instance.description,
-    'skills': instance.skills,
-    'urls': instance.urls,
+    'projectName': instance.projectName.toString(),
+    'description': instance.description.toString(),
+    'skills': instance.skills.toString(),
+    'urls': instance.urls.toString(),
     'duration': instance.duration,
-    'isActive': instance.isActive,
-    '_id': instance.id,
-    'admin': instance.admin,
-    'starBy': instance.starBy,
-    'owner': instance.owner,
-    'thumbnail':instance.thumbnail
+    'isActive': instance.isActive.toString(),
+    '_id': instance.id.toString(),
+    'admin': instance.admin.toString(),
+    'starBy': instance.starBy.toString(),
+    'owner': instance.owner.toString(),
+    'thumbnail':instance.thumbnail.toString()
   };
 
 }

@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:campuscollaborate/locator.dart';
+import 'package:campuscollaborate/models/create_project_model.dart';
 import 'package:campuscollaborate/services/docs_and_images.dart';
+import 'package:campuscollaborate/services/drop_down_services.dart';
+import 'package:campuscollaborate/services/project_services.dart';
 import 'package:campuscollaborate/services/toggle_button_services.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/app_bar.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/common_elevated_button.dart';
@@ -9,9 +12,11 @@ import 'package:campuscollaborate/widgets/createProjectScreen/contributor_with_c
 import 'package:campuscollaborate/widgets/createProjectScreen/drop_down_button.dart';
 import 'package:campuscollaborate/widgets/createProjectScreen/elevated_button.dart';
 import 'package:campuscollaborate/widgets/createProjectScreen/form_text_field_container.dart';
+import 'package:campuscollaborate/widgets/createProjectScreen/multi_dropdown.dart';
 import 'package:campuscollaborate/widgets/createProjectScreen/toggle_buttons.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:provider/provider.dart';
 import 'package:path/path.dart' as path;
 import '../widgets/createProjectScreen/docs_images.dart';
@@ -24,11 +29,13 @@ class CreateProjectScreen extends StatefulWidget {
 }
 
 class _CreateProjectScreenState extends State<CreateProjectScreen> {
+  final MultiSelectController multiSelectController = MultiSelectController();
   final TextEditingController projectTitleController = TextEditingController();
   final TextEditingController domainController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController durationController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  final ProjectServices projectServices=ProjectServices();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,10 +55,13 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                   title: 'Project Title',
                   textEditingController: projectTitleController,
                 ),
-                FormTextFieldContainer(
-                    hintText: 'HTML, CSS, Javascript etc.',
-                    title: 'Domain',
-                    textEditingController: domainController),
+                const Text(
+                  'Skills',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 5,),
+                MultipleSelectionDropDown(multiSelectDropDown: multiSelectController),
+                const SizedBox(height: 10,),
                 FormTextFieldContainer(
                   hintText: 'Few words describing your project.',
                   title: 'Description',
@@ -193,7 +203,22 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                 const SizedBox(
                   height: 15,
                 ),
-                Center(child: CommonElevatedButton(onTap: (){}, text: 'Create New Project'))
+                Center(child: CommonElevatedButton(onTap: ()async{
+                      if(formKey.currentState!.validate()){
+                        CreateProjectModel model=CreateProjectModel(
+                            projectName: projectTitleController.text,
+                            description: descriptionController.text,
+                            skills: getSelectedSkills(multiSelectController.selectedOptions),
+                            urls: ['gygy'],
+                            duration: durationController.text.isEmpty?'New Project':'${durationController.text} ${context.read<DropDownServices>().selectedValue}',
+                            isActive: context.read<ProjectStatusToggleButtonService>().selectedList[0],
+                            id: '',
+                            admin: [],
+                            starBy: null,
+                            owner: '');
+                            await projectServices.createProject(model);
+                      }
+                }, text: 'Create New Project'))
               ],
             ),
           ),
@@ -201,4 +226,12 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
       ),
     ));
   }
+}
+
+List<String> getSelectedSkills(List<ValueItem> list){
+  final List<String> listToBeReturned=[];
+  for(int i=0; i<list.length;i++){
+    listToBeReturned.add(list[i].value.toString());
+  }
+  return listToBeReturned;
 }
