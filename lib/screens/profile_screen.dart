@@ -1,4 +1,5 @@
 import 'package:campuscollaborate/models/user_info.dart';
+import 'package:campuscollaborate/screens/edit_profile.dart';
 import 'package:campuscollaborate/services/roll_number_decoder.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/app_bar.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/common_container.dart';
@@ -57,10 +58,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Text(
                               rollNumberDecoder.getBranch(),
                               style: const TextStyle(fontSize: 12),
-                              overflow: TextOverflow.ellipsis,
+                              overflow: TextOverflow.visible,
                             ),
                             Text(
                               widget.userInfo.program,
+                              overflow: TextOverflow.ellipsis,
                               style: const TextStyle(fontSize: 12),
                             ),
                           ],
@@ -68,6 +70,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                     GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context)=> EditProfile(userDetails:widget.userInfo,)),
+                        );
+                      },
                       child: Column(
                         children: [
                           Image.asset(
