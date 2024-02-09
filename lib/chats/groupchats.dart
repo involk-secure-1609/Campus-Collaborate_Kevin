@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dmchats.dart';
 import 'groupmessages.dart';
 
 class GroupChatScreen extends StatefulWidget {
@@ -11,12 +12,12 @@ class GroupChatScreen extends StatefulWidget {
 class _GroupChatScreen extends State<GroupChatScreen> {
   TextEditingController textController1 = TextEditingController();
   final Stream<QuerySnapshot> _chatStream =
-  FirebaseFirestore.instance.collection('GroupConversations').snapshots();
+      FirebaseFirestore.instance.collection('GroupConversations').snapshots();
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth=MediaQuery.of(context).size.width;
-    double screenHeight=MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -27,11 +28,11 @@ class _GroupChatScreen extends State<GroupChatScreen> {
         backgroundColor: Color.fromRGBO(85, 85, 85, 1),
         title: Center(
           child: Container(
-            width: screenWidth*0.8, // Adjust the width as needed
+            width: screenWidth * 0.8, // Adjust the width as needed
             decoration: BoxDecoration(
               color: Color.fromRGBO(102, 102, 102, 1),
               borderRadius:
-              BorderRadius.circular(30.0), // Set the desired radius
+                  BorderRadius.circular(30.0), // Set the desired radius
             ),
             child: TextField(
               controller: textController1,
@@ -48,10 +49,14 @@ class _GroupChatScreen extends State<GroupChatScreen> {
         actions: [
           IconButton(
             icon: const Icon(
-              Icons.more_vert,
+              Icons.person,
               color: Color.fromRGBO(224, 140, 56, 1),
             ),
             onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => DmChatScreen()),
+              );
               // Handle the action when the three dots icon is pressed
               print('Three dots icon pressed');
             },
@@ -63,35 +68,33 @@ class _GroupChatScreen extends State<GroupChatScreen> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             print(snapshot);
-
             return const Text('Something went wrong');
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            print(snapshot);
             return const Text('Something went wrong');
           }
-          print(snapshot);
-
 
           return ListView(
             children: snapshot.data!.docs.where((DocumentSnapshot document) {
               Map<String, dynamic> data =
-              document.data()! as Map<String, dynamic>;
+                  document.data()! as Map<String, dynamic>;
               var isContain = false;
               String userId = "user1";
-              if (data['members'].includes(userId)) {
+              List<String> members = List<String>.from(data['members']);
+              if (members.contains(userId)) {
                 isContain = true;
               }
               return isContain;
             }).map((DocumentSnapshot document) {
               String GroupId = document.id;
               Map<String, dynamic> data =
-              document.data()! as Map<String, dynamic>;
-              String lastMsg =data['lastMessage'];
-              Timestamp time=data['lastTime'];
+                  document.data()! as Map<String, dynamic>;
+              String lastMsg = data['lastMessage'];
+              Timestamp time = data['lastTime'];
               DateTime dateTime = time.toDate();
-              String formattedDateTime = DateFormat('dd/MM/yyyy').format(dateTime);
+              String formattedDateTime =
+                  DateFormat('dd/MM/yyyy').format(dateTime);
 
               return GestureDetector(
                 onTap: () {
@@ -106,8 +109,8 @@ class _GroupChatScreen extends State<GroupChatScreen> {
                   );
                 },
                 child: Container(
-                  width: screenWidth*0.8,
-                  height: screenHeight*0.1,
+                  width: screenWidth * 0.80,
+                  height: screenHeight * 0.22,
                   margin: EdgeInsets.fromLTRB(20, 20, 20, 5),
                   padding: EdgeInsets.fromLTRB(5, 5, 20, 20),
                   decoration: BoxDecoration(
@@ -137,7 +140,9 @@ class _GroupChatScreen extends State<GroupChatScreen> {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  SizedBox(width: 120,),
+                                  const SizedBox(
+                                    width: 70,
+                                  ),
                                   Text(
                                     formattedDateTime,
                                     style: const TextStyle(
@@ -160,13 +165,13 @@ class _GroupChatScreen extends State<GroupChatScreen> {
                                 children: [
                                   TextSpan(
                                     text: data['lastSender'],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
                                   ),
-                                  TextSpan(
+                                  const TextSpan(
                                     text: ' : ',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -176,7 +181,7 @@ class _GroupChatScreen extends State<GroupChatScreen> {
                                   ),
                                   TextSpan(
                                     text: data['lastMessage'],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,

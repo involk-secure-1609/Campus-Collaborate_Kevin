@@ -4,6 +4,7 @@ import 'package:campuscollaborate/models/user_info.dart';
 import 'package:campuscollaborate/sample_data.dart';
 import 'package:campuscollaborate/screens/home_screen.dart';
 import 'package:campuscollaborate/screens/new_course_review_screen.dart';
+import 'package:campuscollaborate/screens/new_help_request_screen.dart';
 import 'package:campuscollaborate/screens/test_screen.dart';
 import 'package:campuscollaborate/services/all_project_providers.dart';
 import 'package:campuscollaborate/services/nav_bar_services.dart';
@@ -58,6 +59,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ],
         controller: controller,
         screens: [HomeScreen(userInfo: context.read<UserProvider>().userInfo, project: context.read<AllProjectsProvider>().allProjects,),  const CourseReview(), const TestScreen(), DmChatScreen()],
+
       );
     });
   }
