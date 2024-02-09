@@ -28,14 +28,10 @@ class ProjectScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 20,
-              ),
-              project.urls != null || project.urls!.isNotEmpty
-                  ? CustomImageCollage(imagesLink: project.urls!)
-                  : const SizedBox(
-                      height: 0,
-                    ),
+              project.thumbnail == null || project.thumbnail!.isEmpty
+                  ? const SizedBox(
+                height: 0,
+              ):CustomImageCollage(imagesLink: project.thumbnail!),
               const SizedBox(
                 height: 15,
               ),

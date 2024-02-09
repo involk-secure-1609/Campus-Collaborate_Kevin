@@ -2,8 +2,10 @@
 import 'package:campuscollaborate/constants/routing_constants.dart';
 import 'package:campuscollaborate/models/project.dart';
 import 'package:campuscollaborate/models/user_info.dart';
+import 'package:campuscollaborate/screens/bottom_nav_bar_screen.dart';
 import 'package:campuscollaborate/screens/create_project_screen.dart';
 import 'package:campuscollaborate/screens/home_screen.dart';
+import 'package:campuscollaborate/screens/login_screen.dart';
 import 'package:campuscollaborate/screens/profile_screen.dart';
 import 'package:campuscollaborate/screens/project_screen.dart';
 import 'package:campuscollaborate/screens/splash_screen.dart';
@@ -25,6 +27,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case Routes.homeScreen:
       final userInfo=settings.arguments as UserInfo;
       return MaterialPageRoute(builder: (context)=>HomeScreen(userInfo: userInfo));
+    case Routes.navBarScreen:
+      return MaterialPageRoute(builder: (context)=>const NavBarScreen());
+    case Routes.loginScreen:
+      return MaterialPageRoute(builder: (context)=>const LoginScreen());
     default:
       return MaterialPageRoute(builder: (context) => const ErrorScreen());
   }

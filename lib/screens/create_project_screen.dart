@@ -209,14 +209,16 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                             projectName: projectTitleController.text,
                             description: descriptionController.text,
                             skills: getSelectedSkills(multiSelectController.selectedOptions),
-                            urls: ['gygy'],
+                            urls: [],
                             duration: durationController.text.isEmpty?'New Project':'${durationController.text} ${context.read<DropDownServices>().selectedValue}',
                             isActive: context.read<ProjectStatusToggleButtonService>().selectedList[0],
                             id: '',
                             admin: [],
                             starBy: null,
-                            owner: '');
-                            await projectServices.createProject(model);
+                            owner: '',
+                            thumbnail: context.read<ProjectImageStateService>().images
+                        );
+                            await projectServices.createProject(model, context);
                       }
                 }, text: 'Create New Project'))
               ],

@@ -41,29 +41,36 @@ class SkillsListView extends StatelessWidget {
             return SkillContainer(skill: skill);
           }).toList());
     }
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: skillsList.take(4).map((skill) {
-              return SkillContainer(skill: skill);
-            }).toList()),
+          spacing: 8,
+          runSpacing: 8,
+          children: skillsList.take(4).map((skill) {
+            return SkillContainer(skill: skill);
+          }).toList(),
+        ),
+        const SizedBox(height: 5,),
         ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 3, horizontal: 5)),
-            child: Text(
-              '+${skillsList.length - 4} More',
-              style: const TextStyle(
-                  fontSize: 13,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400),
-            ))
+          onPressed: () {
+            // Handle the onPressed event of the ElevatedButton
+          },
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+          ),
+          child: Text(
+            '+${skillsList.length - 4} More',
+            style: const TextStyle(
+              fontSize: 13,
+              color: Colors.black,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
       ],
     );
   }
 }
+
+

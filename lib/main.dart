@@ -8,6 +8,7 @@ import 'package:campuscollaborate/services/docs_and_images.dart';
 import 'package:campuscollaborate/services/drop_down_services.dart';
 import 'package:campuscollaborate/services/nav_bar_services.dart';
 import 'package:campuscollaborate/services/toggle_button_services.dart';
+import 'package:campuscollaborate/services/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:campuscollaborate/routes.dart' as router;
 import 'package:flutter/services.dart';
@@ -39,7 +40,8 @@ void main() async {
       ChangeNotifierProvider(create: (_) => ProjectTypeToggleButtonService()),
       ChangeNotifierProvider(create: (_) => ContributorCrossService()),
       ChangeNotifierProvider(create: (_) => DocsStateService()),
-      ChangeNotifierProvider(create: (_) => ProjectImageStateService())
+      ChangeNotifierProvider(create: (_) => ProjectImageStateService()),
+      ChangeNotifierProvider(create: (_)=>UserProvider(),),
     ],
     child: const MyApp(),
   ));

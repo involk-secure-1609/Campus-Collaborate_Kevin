@@ -5,6 +5,7 @@ import 'package:campuscollaborate/screens/home_screen.dart';
 import 'package:campuscollaborate/screens/new_course_review_screen.dart';
 import 'package:campuscollaborate/screens/test_screen.dart';
 import 'package:campuscollaborate/services/nav_bar_services.dart';
+import 'package:campuscollaborate/services/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +55,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               inactiveColorPrimary: Colors.black)
         ],
         controller: controller,
-        screens: [HomeScreen(userInfo: UserInfo.fromJson(sampleUser)),  const CourseReview(), const TestScreen(), const TestScreen()],
+        screens: [HomeScreen(userInfo: context.read<UserProvider>().userInfo),  const CourseReview(), const TestScreen(), const TestScreen()],
       );
     });
   }

@@ -42,30 +42,56 @@ class Project {
       required this.starBy,
       required this.owner,
       required this.docs,
-        required this.thumbnail
-      });
+      required this.thumbnail});
   factory Project.fromJson(Map<String, dynamic> json) => Project(
-        projectName: json['projectName'] as String,
-        description: json['description'] as String,
-        skills: json['skills'] as List<dynamic>,
-        urls:
-            (json['urls'] as List<dynamic>?)?.map((e) => e as String).toList(),
-        duration: json['duration'] as String,
-        isActive: json['isActive'] as bool,
-        id: json['projectId'] as String,
-        admin:
-            (json['admin'] as List<dynamic>?)?.map((e) => Admin.fromJson(e as Map<String, dynamic>)).toList(),
-        starBy: (json['starBy'] as List<dynamic>?)
-            ?.map((e) => e as String)
-            .toList(),
-        owner: Admin.fromJson(json['owner']),
-        thumbnail: (json['thumbnail'] as List<dynamic>?)
-            ?.map((e) => e as String)
-            .toList(),
-        docs: (json['docs'] as List<dynamic>?)
-            ?.map((e) => e as String)
-            .toList()
-      );
+      projectName:
+          json['projectName'] == null ? '' : json['projectName'] as String,
+      description:
+          json['description'] == null ? '' : json['description'] as String,
+      skills: json['skills'] == null ? [] : json['skills'] as List<dynamic>,
+      urls: json['urls'] == null
+          ? []
+          : (json['urls'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      duration: json['duration'] == null ? '' : json['duration'] as String,
+      isActive: json['isActive'] == null ? false : json['isActive'] as bool,
+      id: json['_id'] == null ? '' : json['_id'] as String,
+      admin: json['admin'] == null
+          ? []
+          : (json['admin'] as List<dynamic>?)
+              ?.map((e) => Admin.fromJson(e as Map<String, dynamic>))
+              .toList(),
+      starBy: json['starBy'] == null
+          ? []
+          : (json['starBy'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList(),
+      owner: json['owner'] == null
+          ? Admin(id: '', name: '')
+          : json['owner'] is String
+              ? Admin(id: '', name: json['owner'])
+              : Admin.fromJson(json['owner']),
+      thumbnail: json['thumbnail'] == null
+          ? []
+          : (json['thumbnail'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList(),
+      docs: json['docs'] == null
+          ? []
+          : (json['docs'] as List<dynamic>?)?.map((e) => e as String).toList());
+
+  factory Project.fromId(String id) => Project(
+      projectName: '',
+      description: '',
+      skills: [],
+      urls: [],
+      duration: '',
+      isActive: false,
+      id: id,
+      admin: [],
+      starBy: [],
+      owner: Admin(id: '', name: ''),
+      docs: [],
+      thumbnail: []);
 
   Map<String, dynamic> toJson(Project instance) => <String, dynamic>{
         'projectName': instance.projectName,

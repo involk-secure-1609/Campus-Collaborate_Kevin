@@ -1,6 +1,6 @@
 import 'package:campuscollaborate/hive_boxes.dart';
 
-class GetAccessTokenService{
+class GetUserDetailsServices{
   static Future<String> accessToken()async{
     final String? accessToken=accessTokenBox.get(accessTokenKey);
     if(accessToken==null){

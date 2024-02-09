@@ -1,6 +1,8 @@
 import 'package:campuscollaborate/constants/api_end_points.dart';
 import 'package:campuscollaborate/hive_boxes.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
+import '../constants/routing_constants.dart';
+import '../locator.dart';
 
 class AuthenticationServices{
   Future<void> loginAuthenticate()async{
@@ -11,8 +13,9 @@ class AuthenticationServices{
      if(accessToken==null){
        throw ("Access Token or User not found");
      }
-     accessTokenBox.put(accessTokenKey, accessToken);
-     loggedInBox.put(loggedInKey, true);
+     await accessTokenBox.put(accessTokenKey, accessToken);
+     await loggedInBox.put(loggedInKey, true);
+     navigationService.pushScreen(Routes.splashScreen);
    }catch(e){
      rethrow;
    }

@@ -1,44 +1,24 @@
-import 'dart:convert';
-
 import 'package:campuscollaborate/constants/api_end_points.dart';
-import 'package:campuscollaborate/constants/headers.dart';
+import 'package:campuscollaborate/constants/http_handler.dart';
+import 'package:campuscollaborate/constants/routing_constants.dart';
+import 'package:campuscollaborate/locator.dart';
 import 'package:campuscollaborate/models/create_project_model.dart';
-import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
+import 'package:campuscollaborate/widgets/commonWidgets/snack_bar.dart';
+import 'package:flutter/material.dart';
+
+import '../constants/dio.dart';
 class ProjectServices{
-  final dio = Dio(
-    BaseOptions(
-      headers: headers,
-    )
-  );
-  Future<void> createProject(CreateProjectModel projectModel)async{
+  Future<void> createProject(CreateProjectModel projectModel, BuildContext context)async{
     try{
-      // print(projectModel.toJson(projectModel));
-      // final response = await http.post(Uri.parse('$globalApiPoint${projectEndPoint}create'),
-      //     headers: headers,
-      //     body: {
-      //       "projectName": "hdiwyuyyug",
-      //       "description": "djisgwhwi",
-      //       "skills": jsonEncode(["1","2"]),
-      //       // "urls": ["bveuefue","jhj"],
-      //       "duration": "4 Months",
-      //       // "admin":["dveguvyg","ook"]
-      //     }
-      // );
       final response = await dio.post('$globalApiPoint${projectEndPoint}create',
-          data: {
-            "projectName": "hdiwyuyyug",
-            "description": "djisgwhwi",
-            "skills": ["1","2"],
-            "urls": ["bveuefue","jhj"],
-            "duration": "4 Months",
-            "admin":["dveguvyg","ook"]
-          }
+          data: projectModel.toJson(projectModel)
       );
-      print('body here');
-      print(response.data);
+      await httpHandler(response, () {
+
+      }, context);
+
     }catch(e){
-      print(e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(showCommonSnackBar(e.toString()));
     }
   }
 }

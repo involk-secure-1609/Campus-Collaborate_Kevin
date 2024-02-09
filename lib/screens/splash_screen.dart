@@ -1,14 +1,43 @@
-import 'package:campuscollaborate/screens/bottom_nav_bar_screen.dart';
-import 'package:campuscollaborate/screens/create_project_screen.dart';
-import 'package:campuscollaborate/screens/login_screen.dart';
+import 'package:campuscollaborate/constants/routing_constants.dart';
+import 'package:campuscollaborate/hive_boxes.dart';
+import 'package:campuscollaborate/locator.dart';
+import 'package:campuscollaborate/services/user_details_services.dart';
+import 'package:campuscollaborate/services/user_services.dart';
 import 'package:flutter/material.dart';
 
-class SplashScreen extends StatelessWidget {
+import '../services/user_provider.dart';
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    getDetails();
+    super.initState();
+  }
+  final UserServices userServices=UserServices();
+  void getDetails()async{
+    final bool loggedIn=await GetUserDetailsServices.userLoggedIn();
+    token= await GetUserDetailsServices.accessToken();
+    if(loggedIn==false){
+      navigationService.pushScreen(Routes.loginScreen);
+    }
+    else{
+      await userServices.getCurrentUserDetails(context);
+      navigationService.pushScreen(Routes.navBarScreen);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-        child: LoginScreen());
+    return const SafeArea(child: Scaffold(
+      body: Center(
+        child: Text('Fetching Data, Please wait...'),
+      ),
+    ),);
   }
 }

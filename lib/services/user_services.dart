@@ -1,23 +1,20 @@
-import 'dart:convert';
 import 'package:campuscollaborate/constants/api_end_points.dart';
-import 'package:campuscollaborate/services/get_access_token.dart';
-import 'package:http/http.dart' as http;
+import 'package:campuscollaborate/constants/dio.dart';
+import 'package:campuscollaborate/services/user_provider.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import '../models/user_info.dart';
 
 class UserServices{
-  Future<UserInfo> getCurrentUserDetails()async{
+  Future<UserInfo> getCurrentUserDetails(BuildContext context)async{
    try{
-     final String accessToken=await GetAccessTokenService.accessToken();
-     final http.Response response= await http.get(Uri.parse('$globalApiPoint${userEndPoint}userById'),
-         headers: {
-           'Cookie': accessToken,
-           'Content-Type': 'application/json'
-         }
-     );
-     final UserInfo userInfo= UserInfo.fromJson(jsonDecode(response.body));
-     return userInfo;
+     final  response= await dio.get('$globalApiPoint${userEndPoint}userById');
+     final UserInfo userInfo= UserInfo.fromJson(response.data);
+     context.read<UserProvider>().setUser(userInfo);
+     return context.read<UserProvider>().userInfo;
    }catch(e){
      rethrow;
    }
   }
 }
+

@@ -156,8 +156,6 @@ class _LoginScreenState extends State<LoginScreen> {
             GestureDetector(
               onTap: ()async{
                 await authenticationServices.loginAuthenticate();
-                final UserInfo userInfo = await userServices.getCurrentUserDetails();
-                navigationService.pushScreen(Routes.homeScreen, arguments: userInfo);
               },
               child: Container(
                 width: 300,

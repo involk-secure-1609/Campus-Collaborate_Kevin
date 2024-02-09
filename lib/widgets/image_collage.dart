@@ -13,14 +13,19 @@ class CustomImageCollage extends StatelessWidget {
     for (int i = 0; i < imagesLink.length; i++) {
       images.add(Img(image: imagesLink[i]));
     }
-    return Container(
-      height: 225,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
-        borderRadius: const BorderRadius.all(Radius.circular(25)),
-      ),
-      child: ImageCollage(images: images),
+    return Column(
+      children: [
+        const SizedBox(height: 20,),
+        Container(
+          height: 225,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
+            borderRadius: const BorderRadius.all(Radius.circular(25)),
+          ),
+          child: ImageCollage(images: images),
+        ),
+      ],
     );
   }
 }

@@ -20,7 +20,7 @@ class UserInfo {
   @HiveField(6)
   final String program;
   @HiveField(7)
-  final List<Project>? projects;
+  List<Project>? projects;
 
   UserInfo(
       {required this.name,
@@ -33,7 +33,7 @@ class UserInfo {
       required this.projects});
   factory UserInfo.fromJson(Map<String, dynamic> json) => UserInfo(
         name: json['name'] as String,
-        rollNumber: json['rollNumber'] as String,
+        rollNumber: json['rollNumber'].toString(),
         skills: json['skills'] as List<dynamic>,
         courses:
             (json['courses'] as List<dynamic>).map((e) => e as String).toList(),
@@ -41,7 +41,7 @@ class UserInfo {
         url: json['url'] as String?,
         program: json['program'] as String,
         projects: (json['projects'] as List<dynamic>?)
-            ?.map((e) => Project.fromJson(e as Map<String, dynamic>))
+            ?.map((e) => e is String?Project.fromId(e):Project.fromJson(e as Map<String, dynamic>))
             .toList(),
       );
   Map<String, dynamic> toJson(UserInfo instance) => <String, dynamic>{
@@ -54,4 +54,7 @@ class UserInfo {
         'program': instance.program,
         'projects': instance.projects,
       };
+  void addProjects(List<Project> projectList){
+    projects=projectList;
+  }
 }
