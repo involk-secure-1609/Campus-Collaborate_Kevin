@@ -63,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               style: const TextStyle(fontSize: 12),
                             ),
                             Text(
-                              rollNumberDecoder.getBranch(),
+                              'Electronics And Communication Branch',
                               style: const TextStyle(fontSize: 12),
                               overflow: TextOverflow.visible,
                             ),

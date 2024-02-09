@@ -73,4 +73,21 @@ class SkillsListView extends StatelessWidget {
   }
 }
 
+class SkillListWithoutButton extends StatelessWidget {
+  final List<dynamic> skillsList;
+  const SkillListWithoutButton({super.key, required this.skillsList});
+
+  @override
+  Widget build(BuildContext context) {
+    return  Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: skillsList.map((skill) {
+        return SkillContainer(skill: skill);
+      }).toList(),
+    );
+  }
+}
+
+
 

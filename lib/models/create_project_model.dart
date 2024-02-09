@@ -1,5 +1,8 @@
 import 'dart:io';
-
+import 'package:mime/mime.dart';
+import 'package:dio/dio.dart';
+import 'package:path/path.dart' as path;
+import 'package:http_parser/http_parser.dart';
 
 class CreateProjectModel{
   final String projectName;
@@ -28,18 +31,39 @@ class CreateProjectModel{
     this.thumbnail
   });
 
-  Map<String, dynamic> toJson(CreateProjectModel instance) => <String, dynamic>{
-    'projectName': instance.projectName,
-    'description': instance.description,
-    'skills': instance.skills,
-    'urls': instance.urls,
-    'duration': instance.duration,
-    'isActive': instance.isActive,
-    '_id': instance.id,
-    'admin': instance.admin,
-    'starBy': instance.starBy,
-    'owner': instance.owner,
-    'thumbnail':instance.thumbnail
-  };
+  Future<Map<String, dynamic>> toJson(CreateProjectModel instance) async {
+    final map= <String, dynamic>{
+      'projectName': instance.projectName,
+      'description': instance.description,
+      'skills': instance.skills,
+      'urls': instance.urls,
+      'duration': instance.duration,
+      'isActive': instance.isActive,
+      '_id': instance.id,
+      'admin': instance.admin,
+      'starBy': instance.starBy,
+      'owner': instance.owner,
+      'thumbnail': await instance.getThumbnailFormData(instance.thumbnail)
+    };
+    return map;
+  }
+  Future<List<Map<String, dynamic>>> getThumbnailFormData(List<File>? thumbnails) async {
+    if (thumbnails == null) return [];
 
+    List<Map<String, dynamic>> formDataList = [];
+    for (var file in thumbnails) {
+      FormData formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(
+          file.path,
+          filename: file.path.split('/').last,
+          contentType: MediaType(
+            'image',
+            file.path.split('/').last.split('.').last,
+          ),
+        ),
+      });
+      formDataList.add(Map.fromEntries(formData.fields));
+    }
+    return formDataList;
+  }
 }

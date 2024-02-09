@@ -76,7 +76,7 @@ class ProjectScreen extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              SkillsListView(skillsList: project.skills),
+              SkillListWithoutButton(skillsList: project.skills),
               project.admin == null || project.admin!.isEmpty
                   ? const SizedBox(
                       height: 0,

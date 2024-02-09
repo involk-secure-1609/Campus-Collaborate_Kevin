@@ -72,7 +72,7 @@ class Project {
               : Admin.fromJson(json['owner']),
       thumbnail: json['thumbnail'] == null
           ? []
-          : (json['thumbnail'] as List<dynamic>?)
+          :json['thumbnail'] is String?[json['thumbnail']]: (json['thumbnail'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList(),
       docs: json['docs'] == null
