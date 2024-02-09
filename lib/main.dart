@@ -15,6 +15,9 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'locator.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import 'firebase_options.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -30,6 +33,9 @@ void main() async {
   //     options: DefaultFirebaseOptions.currentPlatform,
   //     );
   setUpLocator();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
   runApp(MultiProvider(
@@ -41,7 +47,9 @@ void main() async {
       ChangeNotifierProvider(create: (_) => ContributorCrossService()),
       ChangeNotifierProvider(create: (_) => DocsStateService()),
       ChangeNotifierProvider(create: (_) => ProjectImageStateService()),
-      ChangeNotifierProvider(create: (_)=>UserProvider(),),
+      ChangeNotifierProvider(
+        create: (_) => UserProvider(),
+      ),
     ],
     child: const MyApp(),
   ));

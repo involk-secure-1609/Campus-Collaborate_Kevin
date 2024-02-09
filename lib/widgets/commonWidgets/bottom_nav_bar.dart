@@ -1,3 +1,4 @@
+import 'package:campuscollaborate/chats/dmchats.dart';
 import 'package:campuscollaborate/constants/themes.dart';
 import 'package:campuscollaborate/models/user_info.dart';
 import 'package:campuscollaborate/sample_data.dart';
@@ -55,7 +56,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               inactiveColorPrimary: Colors.black)
         ],
         controller: controller,
-        screens: [HomeScreen(userInfo: context.read<UserProvider>().userInfo),  const CourseReview(), const TestScreen(), const TestScreen()],
+        screens: [HomeScreen(userInfo: context.read<UserProvider>().userInfo),  const CourseReview(), const TestScreen(), DmChatScreen()],
       );
     });
   }
