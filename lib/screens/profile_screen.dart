@@ -27,7 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         body: SingleChildScrollView(
           child: Padding(
             padding:
-                const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 0),
+                const EdgeInsets.only(left: 9, right: 9, top: 10, bottom: 0),
             child: Column(
               children: [
                 Row(
@@ -35,7 +35,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Row(
                       children: [
-                        const Icon(
+                        widget.userInfo.url != null?
+                        ClipOval(
+                          child: Image.network(widget.userInfo.url!,
+                            height: 80,
+                            width: 80,
+                            fit: BoxFit.cover,
+                          ),
+                        ) : const Icon(
                           Icons.supervised_user_circle,
                           size: 90,
                           color: Colors.white,
