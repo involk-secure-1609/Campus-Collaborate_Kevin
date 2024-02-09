@@ -6,6 +6,7 @@ import 'package:campuscollaborate/services/docs_and_images.dart';
 import 'package:campuscollaborate/services/drop_down_services.dart';
 import 'package:campuscollaborate/services/project_services.dart';
 import 'package:campuscollaborate/services/toggle_button_services.dart';
+import 'package:campuscollaborate/services/user_services.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/app_bar.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/common_elevated_button.dart';
 import 'package:campuscollaborate/widgets/createProjectScreen/contributor_with_cross.dart';
@@ -172,29 +173,24 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                 ),
                 Consumer<ProjectImageStateService>(
                     builder: (context, service, child) {
-                  if (service.images.isEmpty) {
+                  if (service.images==null) {
                     return const SizedBox(
                       height: 0,
                     );
                   }
-                  return Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: service.images.map((docs) {
-                        return DocsImagesWithCross(
-                          docsName: path.basename(docs.path),
-                          onCrossTap: ()async{
-                           await service.removeDocs(docs);
-                          },
-                        );
-                      }).toList());
+                  return DocsImagesWithCross(
+                    docsName: path.basename(service.images!.path),
+                    onCrossTap: ()async{
+                      await service.removeDocs(service.images!);
+                    },
+                  );
                 }),
                 AddElevatedButton(
                   buttonText: 'Upload New',
                   onTap: () async{
-                    FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true, type: FileType.custom, allowedExtensions: ['jpg', 'png', 'jpeg']);
+                    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['jpg', 'png', 'jpeg']);
                     if(result!=null){
-                      List<File> files = result.paths.map((path) => File(path!)).toList();
+                      File files = File(result.files.single.path!);
                       context.read<ProjectImageStateService>().addImage(files);
                     }
                   },
@@ -216,9 +212,10 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                             admin: [],
                             starBy: null,
                             owner: '',
-                            thumbnail: context.read<ProjectImageStateService>().images
+                            thumbnail: null
                         );
-                            await projectServices.createProject(model, context);
+                        String thumbNailPath = context.read<ProjectImageStateService>().images!.path;
+                        await projectServices.createProject(model, context,thumbNailPath);
                       }
                 }, text: 'Create New Project'))
               ],

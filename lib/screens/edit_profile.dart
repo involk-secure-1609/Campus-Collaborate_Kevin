@@ -85,6 +85,7 @@ class _EditProfileState extends State<EditProfile> {
                         onTap: () async{
                           await UserServices().updateSkills(context, getSelectedSkills(multiSelectController.selectedOptions));
                           if(!mounted) return;
+                          await UserServices().updateCourses(context, getSelectedCourses(multiSelectCourseController.selectedOptions));
                         },
                         text: 'Update Profile')),
               ],

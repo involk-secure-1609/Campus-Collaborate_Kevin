@@ -24,23 +24,24 @@ class DocsStateService extends ChangeNotifier {
 }
 
 class ProjectImageStateService extends ChangeNotifier {
-  List<File> _images = [];
+  File? _images ;
 
-  void addImage(List<File> docs) {
+  void addImage(File docs) {
     _images=docs;
+    print(_images!.path);
     notifyListeners();
   }
 
   Future<void> removeDocs(File docs) async{
-    _images.remove(docs);
+    _images=null;
     await docs.delete();
     notifyListeners();
   }
 
   void resetProvider(){
-    _images.clear();
+    _images =null;
     notifyListeners();
   }
 
-  List<File> get images => _images;
+  File? get images => _images;
 }

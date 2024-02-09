@@ -15,7 +15,7 @@ class CreateProjectModel{
   final List<String>? admin;
   final List<String>? starBy;
   final String owner;
-  final List<File>? thumbnail;
+  final File? thumbnail;
 
   CreateProjectModel({
     required this.projectName,
@@ -31,7 +31,7 @@ class CreateProjectModel{
     this.thumbnail
   });
 
-  Future<Map<String, dynamic>> toJson(CreateProjectModel instance) async {
+  Map<String, dynamic> toJson(CreateProjectModel instance) {
     final map= <String, dynamic>{
       'projectName': instance.projectName,
       'description': instance.description,
@@ -43,27 +43,17 @@ class CreateProjectModel{
       'admin': instance.admin,
       'starBy': instance.starBy,
       'owner': instance.owner,
-      'thumbnail': await instance.getThumbnailFormData(instance.thumbnail)
+      'thumbnail': null
     };
     return map;
   }
-  Future<List<Map<String, dynamic>>> getThumbnailFormData(List<File>? thumbnails) async {
-    if (thumbnails == null) return [];
-
-    List<Map<String, dynamic>> formDataList = [];
-    for (var file in thumbnails) {
-      FormData formData = FormData.fromMap({
-        'file': await MultipartFile.fromFile(
-          file.path,
-          filename: file.path.split('/').last,
-          contentType: MediaType(
-            'image',
-            file.path.split('/').last.split('.').last,
-          ),
-        ),
-      });
-      formDataList.add(Map.fromEntries(formData.fields));
+  Future<FormData> getDocsFormData(List<File> docs) async {
+    var formData = FormData();
+    for (var file in docs) {
+      formData.files.addAll([
+        MapEntry("docs", await MultipartFile.fromFile(file.path)),
+      ]);
     }
-    return formDataList;
+    return formData;
   }
 }
