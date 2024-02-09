@@ -16,6 +16,7 @@ class CreateProjectModel{
   final List<String>? starBy;
   final String owner;
   final File? thumbnail;
+  final List<File>? docs;
 
   CreateProjectModel({
     required this.projectName,
@@ -28,7 +29,8 @@ class CreateProjectModel{
     required this.admin,
     required this.starBy,
     required this.owner,
-    this.thumbnail
+    this.thumbnail,
+    this.docs
   });
 
   Map<String, dynamic> toJson(CreateProjectModel instance) {
@@ -47,13 +49,14 @@ class CreateProjectModel{
     };
     return map;
   }
-  Future<FormData> getDocsFormData(List<File> docs) async {
+  Future<FormData> getDocsFormData(List<File> docs, String id) async {
     var formData = FormData();
     for (var file in docs) {
       formData.files.addAll([
         MapEntry("docs", await MultipartFile.fromFile(file.path)),
       ]);
     }
+    formData.fields.add(MapEntry("id",id));
     return formData;
   }
 }

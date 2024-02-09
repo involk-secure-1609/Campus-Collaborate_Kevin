@@ -1,23 +1,26 @@
+import 'package:campuscollaborate/constants/all_courses.dart';
 import 'package:campuscollaborate/constants/skills.dart';
 import 'package:flutter/material.dart';
 
 class SkillContainer extends StatelessWidget {
   final dynamic skill;
   final double? fontSize;
-  const SkillContainer({super.key, required this.skill, this.fontSize});
+  final bool? isCourse;
+  const SkillContainer({super.key, required this.skill, this.fontSize, this.isCourse});
 
   @override
   Widget build(BuildContext context) {
+    final List<int> skillInt=[0];
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: skill is int
-            ? SkillsComponents.getSkillColor(SkillsEnum.values[skill])
+        color: isParsable(skill, skillInt)
+            ? SkillsComponents.getSkillColor(SkillsEnum.values[skillInt[0]])
             : Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       child: Text(
-        skill is int ? SkillsEnum.values[skill].name : skill.toString(),
+        isParsable(skill, skillInt)?SkillsEnum.values[skillInt[0]].name : skill.toString(),
         style: TextStyle(
             fontSize: fontSize ?? 13,
             color: Colors.black,
@@ -88,6 +91,58 @@ class SkillListWithoutButton extends StatelessWidget {
     );
   }
 }
+
+bool isParsable(String source, List<int> tobeChangedValue){
+  try{
+    int parsedInt= int.parse(source);
+    tobeChangedValue[0]=parsedInt;
+    return true;
+  }catch(e){
+    return false;
+  }
+}
+
+class CourseContainer extends StatelessWidget {
+  final String index;
+  const CourseContainer({super.key, required this.index});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<int> listForChanging=[0];
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Text(isParsable(index,listForChanging)?
+        courses[listForChanging[0]]['name'].toString():'Invalid Course',
+        style: const TextStyle(
+            fontSize: 13,
+            color: Colors.black,
+            fontWeight: FontWeight.w400),
+      ),
+    );
+  }
+}
+
+class CourseContainerListView extends StatelessWidget {
+  final List<String> coursesList;
+  const CourseContainerListView({super.key, required this.coursesList});
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: coursesList.map((index) {
+        return CourseContainer(index: index);
+      }).toList(),
+    );
+  }
+}
+
+
 
 
 

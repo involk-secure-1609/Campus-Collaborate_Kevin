@@ -10,27 +10,27 @@ class RollNumberDecoder {
 
     switch (branchCode) {
       case "06":
-        return "Biosciences and Bioengineering";
+        return "BSBE";
       case "07":
-        return "Chemical Engineering";
+        return "CL";
       case "22":
-        return "Chemical Science and Technology";
+        return "CST";
       case "04":
-        return "Civil Engineering";
+        return "CE";
       case "01":
-        return "Computer Science and Engineering";
+        return "CSE";
       case "50":
-        return "Data Science and Artificial Intelligence";
+        return "DSAI";
       case "02":
-        return "Electronics and Communication Engineering";
+        return "ECE";
       case "08":
-        return "Electronics and Electrical Engineering";
+        return "EEE";
       case "21":
-        return "Engineering Physics";
+        return "EP";
       case "23":
-        return "Mathematics and Computing";
+        return "MnC";
       case "03":
-        return "Mechanical Engineering";
+        return "ME";
       default:
         return "Unknown Branch";
     }

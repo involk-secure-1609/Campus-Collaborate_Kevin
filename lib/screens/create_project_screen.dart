@@ -214,8 +214,8 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                             owner: '',
                             thumbnail: null
                         );
-                        String thumbNailPath = context.read<ProjectImageStateService>().images!.path;
-                        await projectServices.createProject(model, context,thumbNailPath);
+                        String? thumbNailPath = context.read<ProjectImageStateService>().images==null?null:context.read<ProjectImageStateService>().images!.path;
+                        await projectServices.createProject(model, context,thumbNailPath, context.read<DocsStateService>().docs);
                       }
                 }, text: 'Create New Project'))
               ],

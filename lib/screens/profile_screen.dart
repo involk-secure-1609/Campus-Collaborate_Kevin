@@ -63,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               style: const TextStyle(fontSize: 12),
                             ),
                             Text(
-                              'Electronics And Communication Branch',
+                              rollNumberDecoder.getBranch(),
                               style: const TextStyle(fontSize: 12),
                               overflow: TextOverflow.visible,
                             ),
@@ -122,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(
                     height: 5,
                   ),
-                  SkillsListView(skillsList: widget.userInfo.courses),
+                  CourseContainerListView(coursesList: widget.userInfo.courses),
                 ]),
                 const SizedBox(
                   height: 20,
