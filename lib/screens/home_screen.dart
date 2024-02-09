@@ -7,9 +7,12 @@ import 'package:campuscollaborate/widgets/commonWidgets/common_text_field.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/project_container.dart';
 import 'package:flutter/material.dart';
 
+import '../models/project.dart';
+
 class HomeScreen extends StatelessWidget {
   final UserInfo userInfo;
-  const HomeScreen({super.key, required this.userInfo});
+  final List<Project>? project;
+  const HomeScreen({super.key, required this.userInfo, this.project});
 
   @override
   Widget build(BuildContext context) {
@@ -101,20 +104,20 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            userInfo.projects == null || userInfo.projects!.isEmpty
+            project == null || project!.isEmpty
                 ? const Center(
                     child: Text('No Projects to Show!'),
                   )
                 : Expanded(
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
-                        itemCount: userInfo.projects!.length,
+                        itemCount: project!.length,
                         itemBuilder: (context, index) => GestureDetector(
                           onTap: (){
-                            navigationService.pushScreen(Routes.projectScreen, arguments:userInfo.projects![index]);
+                            navigationService.pushScreen(Routes.projectScreen, arguments:project![index]);
                           },
                           child: ProjectContainer(
-                              project: userInfo.projects![index]),
+                              project: project![index]),
                         )),
                   )
           ],

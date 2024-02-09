@@ -16,6 +16,7 @@ class UserServices {
   Future<UserInfo> getCurrentUserDetails(BuildContext context) async {
     try {
       final response = await dio.get('$globalApiPoint${userEndPoint}userById');
+      print(response.data);
       final UserInfo userInfo = UserInfo.fromJson(response.data);
       context.read<UserProvider>().setUser(userInfo);
       return context

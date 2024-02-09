@@ -1,13 +1,20 @@
 import 'dart:io';
 import 'package:campuscollaborate/constants/api_end_points.dart';
+import 'package:campuscollaborate/constants/routing_constants.dart';
+import 'package:campuscollaborate/locator.dart';
 import 'package:campuscollaborate/models/create_project_model.dart';
+import 'package:campuscollaborate/models/project.dart';
+import 'package:campuscollaborate/services/all_project_providers.dart';
+import 'package:campuscollaborate/services/user_services.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/snack_bar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../constants/dio.dart';
 class ProjectServices{
   Future<void> createProject(CreateProjectModel projectModel, BuildContext context, String? imagePath, List<File>? docs)async{
     try{
+      final UserServices userServices= UserServices();
       var bodyToBeSent=projectModel.toJson(projectModel);
       final response = await dio.post('$globalApiPoint${projectEndPoint}create',
           data: bodyToBeSent
@@ -28,8 +35,24 @@ class ProjectServices{
            data: docsFormData
        );
      }
+     await userServices.getCurrentUserDetails(context);
+     navigationService.pushScreen(Routes.navBarScreen);
     }catch(e){
       ScaffoldMessenger.of(context).showSnackBar(showCommonSnackBar(e.toString()));
+    }
+  }
+
+  Future<List<Project>> getAllProjects(BuildContext context)async{
+    try{
+      final response = await dio.get('$globalApiPoint${projectEndPoint}getAllProject');
+      final List<Project> fetchedProjects=[];
+      for(int i=0;i<response.data.length;i++){
+        fetchedProjects.add(Project.fromJson(response.data[i]));
+      }
+      context.read<AllProjectsProvider>().setFetchedProjects(fetchedProjects);
+      return context.read<AllProjectsProvider>().allProjects;
+    }catch(e){
+      rethrow;
     }
   }
 }

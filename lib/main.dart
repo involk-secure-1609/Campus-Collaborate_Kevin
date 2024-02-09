@@ -3,6 +3,7 @@ import 'package:campuscollaborate/hive_boxes.dart';
 import 'package:campuscollaborate/models/admin.dart';
 import 'package:campuscollaborate/models/project.dart';
 import 'package:campuscollaborate/models/user_info.dart';
+import 'package:campuscollaborate/services/all_project_providers.dart';
 import 'package:campuscollaborate/services/contributor_cross.dart';
 import 'package:campuscollaborate/services/docs_and_images.dart';
 import 'package:campuscollaborate/services/drop_down_services.dart';
@@ -50,6 +51,7 @@ void main() async {
       ChangeNotifierProvider(
         create: (_) => UserProvider(),
       ),
+      ChangeNotifierProvider(create: (_)=>AllProjectsProvider())
     ],
     child: const MyApp(),
   ));
