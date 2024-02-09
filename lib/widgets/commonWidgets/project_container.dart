@@ -14,31 +14,40 @@ class ProjectContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return project.thumbnail == null || project.thumbnail!.isEmpty
         ? ProjectContainerWithoutImage(project: project)
-        : Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
-            borderRadius: const BorderRadius.all(Radius.circular(25)),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
-                    borderRadius:
-                        const BorderRadius.all(Radius.circular(25)),
-                  ),
-                  child: Image.network(
-                    project.thumbnail![0],
-                    height: 100,
-                    width: double.infinity,
-                  )),
-              ProjectContainerWithoutImage(project: project)
-            ],
-          ),
+        : Column(
+          children: [
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
+                borderRadius: const BorderRadius.all(Radius.circular(25)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(25)),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+                        child: Image.network(
+                          project.thumbnail![0],
+                          height: 130,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      )),
+                  ProjectContainerWithoutImage(project: project)
+                ],
+              ),
+            ),
+            const SizedBox(height: 20,)
+          ],
         );
   }
 }
@@ -116,7 +125,7 @@ class ProjectContainerWithoutImage extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 10,)
+        const SizedBox(height: 20,)
       ],
     );
   }

@@ -16,14 +16,17 @@ class CustomImageCollage extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 20,),
-        Container(
-          height: 225,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
-            borderRadius: const BorderRadius.all(Radius.circular(25)),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(25),
+          child: Container(
+            height: 225,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
+              borderRadius: const BorderRadius.all(Radius.circular(25)),
+            ),
+            child: ImageCollage(images: images),
           ),
-          child: ImageCollage(images: images),
         ),
       ],
     );

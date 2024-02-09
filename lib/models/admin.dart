@@ -14,9 +14,9 @@ class Admin {
   Admin({required this.id, required this.name, this.url});
 
   factory Admin.fromJson(Map<String, dynamic> json) => Admin(
-      id: json['_id'] as String,
-      name: json['name'] as String,
-      url: json['url'] );
+      id: json['_id']==null?'':json['_id'] as String,
+      name: json['name']==null?'':json['name'] as String,
+      url: json['url']==null?'':json['url'] as String );
 
   Map<String, dynamic> toJson(Admin admin) =>
       <String, dynamic>{"_id": admin.id, "name": admin.name, "url": admin.url};
