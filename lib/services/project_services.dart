@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:campuscollaborate/constants/api_end_points.dart';
+import 'package:campuscollaborate/constants/http_handler.dart';
 import 'package:campuscollaborate/constants/routing_constants.dart';
 import 'package:campuscollaborate/locator.dart';
 import 'package:campuscollaborate/models/create_project_model.dart';
@@ -54,5 +55,14 @@ class ProjectServices{
     }catch(e){
       rethrow;
     }
+  }
+
+  Future<void> starProject(String id, BuildContext context)async{
+    final response = await dio.post('$globalApiPoint${userEndPoint}addStarBy', data: {
+      "id":id
+    });
+    await httpHandler(response, () async{
+      await UserServices().getCurrentUserDetails(context);
+    }, context);
   }
 }

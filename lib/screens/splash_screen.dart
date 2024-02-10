@@ -1,6 +1,7 @@
 import 'package:campuscollaborate/constants/routing_constants.dart';
 import 'package:campuscollaborate/hive_boxes.dart';
 import 'package:campuscollaborate/locator.dart';
+import 'package:campuscollaborate/screens/contributor_search_screen.dart';
 import 'package:campuscollaborate/services/project_services.dart';
 import 'package:campuscollaborate/services/user_details_services.dart';
 import 'package:campuscollaborate/services/user_services.dart';

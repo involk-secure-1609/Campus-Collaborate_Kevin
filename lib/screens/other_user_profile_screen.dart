@@ -1,4 +1,7 @@
+import 'package:campuscollaborate/constants/routing_constants.dart';
+import 'package:campuscollaborate/locator.dart';
 import 'package:campuscollaborate/models/user_info.dart';
+import 'package:campuscollaborate/services/user_services.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +28,6 @@ class _OtherUserProfileScreenState extends State<OtherUserProfileScreen> {
       child: Scaffold(
         extendBody: true,
         appBar: customAppBar('Profile'),
-        bottomNavigationBar: const BottomNavBar(),
         body: SingleChildScrollView(
           child: Padding(
             padding:
@@ -37,7 +39,14 @@ class _OtherUserProfileScreenState extends State<OtherUserProfileScreen> {
                   children: [
                     Row(
                       children: [
-                        const Icon(
+                        widget.userInfo.url != null&&widget.userInfo.url!.isNotEmpty?
+                        ClipOval(
+                          child: Image.network(widget.userInfo.url!,
+                            height: 80,
+                            width: 80,
+                            fit: BoxFit.cover,
+                          ),
+                        ) : const Icon(
                           Icons.supervised_user_circle,
                           size: 90,
                           color: Colors.white,
@@ -98,7 +107,7 @@ class _OtherUserProfileScreenState extends State<OtherUserProfileScreen> {
                   const SizedBox(
                     height: 5,
                   ),
-                  SkillsListView(skillsList: widget.userInfo.skills),
+                  SkillListWithoutButton(skillsList: widget.userInfo.skills),
                 ]),
                 const SizedBox(
                   height: 20,
@@ -111,27 +120,17 @@ class _OtherUserProfileScreenState extends State<OtherUserProfileScreen> {
                   const SizedBox(
                     height: 5,
                   ),
-                  SkillsListView(skillsList: widget.userInfo.courses),
+                  CourseContainerListView(coursesList: widget.userInfo.courses),
                 ]),
                 const SizedBox(
                   height: 20,
                 ),
                 CommonGesturizedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      navigationService.pushScreen(Routes.projectListScreen, arguments: widget.userInfo.projects);
+                    },
                     buttonText: const Text(
                       'Projects',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    )),
-                const SizedBox(
-                  height: 20,
-                ),
-                CommonGesturizedButton(
-                    onPressed: () {},
-                    buttonText: const Text(
-                      'Course Reviews',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
@@ -148,3 +147,37 @@ class _OtherUserProfileScreenState extends State<OtherUserProfileScreen> {
     );
   }
 }
+
+class ProfileScreenSplash extends StatefulWidget {
+  final String userId;
+  const ProfileScreenSplash({super.key, required this.userId});
+
+  @override
+  State<ProfileScreenSplash> createState() => _ProfileScreenSplashState();
+}
+
+class _ProfileScreenSplashState extends State<ProfileScreenSplash> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('id here');
+    print(widget.userId);
+    fetchDetails();
+  }
+  Future<void> fetchDetails()async{
+    final UserInfo userInfo= await UserServices().getUserById(widget.userId);
+    print('in splash');
+    print(userInfo.name);
+    navigationService.pushReplacementScreen(Routes.otherUserProfileScreen, arguments: userInfo);
+  }
+  @override
+  Widget build(BuildContext context) {
+    return const SafeArea(child: Scaffold(
+      body: Center(
+        child: Text('Fetching Data, Please wait...'),
+      ),
+    ),);
+  }
+}
+

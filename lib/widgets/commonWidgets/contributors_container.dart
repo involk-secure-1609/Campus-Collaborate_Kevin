@@ -1,4 +1,6 @@
+import 'package:campuscollaborate/constants/routing_constants.dart';
 import 'package:campuscollaborate/constants/themes.dart';
+import 'package:campuscollaborate/locator.dart';
 import 'package:campuscollaborate/models/admin.dart';
 import 'package:flutter/material.dart';
 
@@ -10,38 +12,45 @@ class ContributorContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      padding: const EdgeInsets.all(10),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-      ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
-            radius: 12,
-            child: contributor.url == null
-                ? Image.asset('assets/circular_user.png')
-                : Image.network(
-                    contributor.url!,
-                    height: 20,
-                    width: 20,
-                  ),
-          ),
-          const SizedBox(width: 5,),
-          Expanded(
-            child: Text(
-              contributor.name,
-              style: TextStyle(
-                  fontSize: fontSize ?? 13,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400),
-              overflow: TextOverflow.ellipsis,
+    return GestureDetector(
+      onTap: (){
+        print('inside contributor');
+        print(contributor.id);
+        navigationService.pushScreen(Routes.otherUserProfileSplashScreen, arguments: contributor.id);
+      },
+      child: Container(
+        width: 150,
+        padding: const EdgeInsets.all(10),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundColor: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
+              radius: 12,
+              child: contributor.url == null||contributor.url!.isEmpty
+                  ? Image.asset('assets/circular_user.png')
+                  : Image.network(
+                      contributor.url!,
+                      height: 20,
+                      width: 20,
+                    ),
             ),
-          ),
-        ],
+            const SizedBox(width: 5,),
+            Expanded(
+              child: Text(
+                contributor.name,
+                style: TextStyle(
+                    fontSize: fontSize ?? 13,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

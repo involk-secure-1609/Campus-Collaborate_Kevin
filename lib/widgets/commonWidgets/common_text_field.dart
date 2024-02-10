@@ -9,6 +9,9 @@ class CommonTextField extends StatelessWidget {
   final Color? backgroundColor;
   final double? width;
   final double? height;
+  final void Function()? onTap;
+  final void Function(String value)? onChanged;
+  final Widget? prefix;
   const CommonTextField(
       {super.key,
       required this.textEditingController,
@@ -16,7 +19,11 @@ class CommonTextField extends StatelessWidget {
         this.backgroundColor,
         this.width,
         this.height,
-      this.suffix});
+      this.suffix,
+      this.onTap,
+        this.onChanged,
+        this.prefix
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +44,13 @@ class CommonTextField extends StatelessWidget {
                 color: Themes.getColors(ColorsValues.LIGHT_TEXT_COLOR),
                 fontSize: 13,
                 fontWeight: FontWeight.w400),
-            suffixIcon: suffix),
+            suffixIcon: GestureDetector(onTap:onTap ?? (){}, child: suffix,
+            ),
+          prefix: prefix
+        ),
         style: const TextStyle(color: Colors.white, fontSize: 13),
         cursorColor: Themes.getColors(ColorsValues.ORANGE_COLOR),
+        onChanged: onChanged,
       ),
     );
   }

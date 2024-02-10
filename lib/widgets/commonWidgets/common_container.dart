@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class CommonContainer extends StatelessWidget {
   final List<Widget> children;
-  const CommonContainer({super.key, required this.children});
+  final Color? color;
+  const CommonContainer({super.key, required this.children, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class CommonContainer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
+        color: color ?? Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
         borderRadius: const BorderRadius.all(Radius.circular(25)),
       ),
       child: Column(

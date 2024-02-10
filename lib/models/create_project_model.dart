@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:campuscollaborate/models/admin.dart';
 import 'package:mime/mime.dart';
 import 'package:dio/dio.dart';
 import 'package:path/path.dart' as path;
@@ -12,7 +13,7 @@ class CreateProjectModel{
   final String duration;
   final bool isActive;
   final String id;
-  final List<String>? admin;
+  final List<Admin>? admin;
   final List<String>? starBy;
   final String owner;
   final File? thumbnail;
@@ -42,7 +43,7 @@ class CreateProjectModel{
       'duration': instance.duration,
       'isActive': instance.isActive,
       '_id': instance.id,
-      'admin': instance.admin,
+      'admin': instance.admin==null?null:instance.admin!.map((e) => e.toJson(e)).toList(),
       'starBy': instance.starBy,
       'owner': instance.owner,
       'thumbnail': null

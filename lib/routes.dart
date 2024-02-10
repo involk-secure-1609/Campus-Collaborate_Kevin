@@ -3,10 +3,13 @@ import 'package:campuscollaborate/constants/routing_constants.dart';
 import 'package:campuscollaborate/models/project.dart';
 import 'package:campuscollaborate/models/user_info.dart';
 import 'package:campuscollaborate/screens/bottom_nav_bar_screen.dart';
+import 'package:campuscollaborate/screens/contributor_search_screen.dart';
 import 'package:campuscollaborate/screens/create_project_screen.dart';
 import 'package:campuscollaborate/screens/home_screen.dart';
 import 'package:campuscollaborate/screens/login_screen.dart';
+import 'package:campuscollaborate/screens/other_user_profile_screen.dart';
 import 'package:campuscollaborate/screens/profile_screen.dart';
+import 'package:campuscollaborate/screens/project_list_screen.dart';
 import 'package:campuscollaborate/screens/project_screen.dart';
 import 'package:campuscollaborate/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +34,20 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context)=>const NavBarScreen());
     case Routes.loginScreen:
       return MaterialPageRoute(builder: (context)=>const LoginScreen());
+    case Routes.contributorSearchScreen:
+      return MaterialPageRoute(builder: (context)=>const ContributorSearchScreen());
+    case Routes.projectListScreen:
+      final projects = settings.arguments as List<Project>?;
+      return MaterialPageRoute(builder: (context)=> ProjectListScreen(project: projects));
+    case Routes.savedProjectListScreen:
+      final projects = settings.arguments as List<Project>?;
+      return MaterialPageRoute(builder: (context)=>SavedProjectListScreen(project: projects));
+    case Routes.otherUserProfileScreen:
+      final userInfo = settings.arguments as UserInfo;
+      return MaterialPageRoute(builder: (context)=>OtherUserProfileScreen(userInfo: userInfo));
+    case Routes.otherUserProfileSplashScreen:
+      final id = settings.arguments as String;
+      return MaterialPageRoute(builder: (context)=>ProfileScreenSplash(userId: id));
     default:
       return MaterialPageRoute(builder: (context) => const ErrorScreen());
   }

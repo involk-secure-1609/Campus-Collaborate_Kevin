@@ -1,4 +1,4 @@
-import 'package:campuscollaborate/services/contributor_cross.dart';
+import 'package:campuscollaborate/services/contributor_search_screen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +22,6 @@ class ContributorWithCross extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 150,
           padding: const EdgeInsets.all(10),
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -68,9 +67,9 @@ class ContributorsWithCrossListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ContributorCrossService>(
+    return Consumer<ContributorSearchScreenService>(
         builder: (context, service, child) {
-      if (service.contributors.isEmpty) {
+      if (service.selectedAdminsList.isEmpty) {
         return const SizedBox(
           height: 0,
         );
@@ -78,10 +77,10 @@ class ContributorsWithCrossListView extends StatelessWidget {
         return Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: service.contributors.map((contributor) {
+            children: service.selectedAdminsList.map((contributor) {
               return ContributorWithCross(
                 contributor: contributor,
-                prefixImage: contributor.url == null
+                prefixImage: contributor.url == null||contributor.url!.isEmpty
                     ? Image.asset(
                         'assets/circular_user.png',
                         height: 25,
@@ -93,7 +92,7 @@ class ContributorsWithCrossListView extends StatelessWidget {
                         width: 25,
                       ),
                 onCrossTap: () {
-                  service.removeAdminFromList(contributor);
+                  service.removeSelectedAdmin(contributor);
                 },
               );
             }).toList());

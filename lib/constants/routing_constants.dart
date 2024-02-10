@@ -6,4 +6,9 @@ class Routes {
   static const String homeScreen = "home-screen";
   static const String navBarScreen = "nav-bar-screen";
   static const String loginScreen = "login-screen";
+  static const String contributorSearchScreen = "contributor-search-screen";
+  static const String projectListScreen = "project-list-screen";
+  static const String savedProjectListScreen = "saved-project-list-screen";
+  static const String otherUserProfileScreen = "other-user-profile-screen";
+  static const String otherUserProfileSplashScreen = "other-user-profile-splash-screen";
 }

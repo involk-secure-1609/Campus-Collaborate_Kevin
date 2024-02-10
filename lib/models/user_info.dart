@@ -21,6 +21,8 @@ class UserInfo {
   final String program;
   @HiveField(7)
   List<Project>? projects;
+  @HiveField(8)
+  List<Project>? starBy;
 
   UserInfo(
       {required this.name,
@@ -30,7 +32,9 @@ class UserInfo {
       required this.email,
       required this.url,
       required this.program,
-      required this.projects});
+      required this.projects,
+      this.starBy
+      });
   factory UserInfo.fromJson(Map<String, dynamic> json) => UserInfo(
         name: json['name'] as String,
         rollNumber: json['rollNumber'].toString(),
@@ -41,6 +45,9 @@ class UserInfo {
         url: json['url'] as String?,
         program: json['program'] as String,
         projects: (json['projects'] as List<dynamic>?)
+            ?.map((e) => e is String?Project.fromId(e):Project.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        starBy: (json['starBy'] as List<dynamic>?)
             ?.map((e) => e is String?Project.fromId(e):Project.fromJson(e as Map<String, dynamic>))
             .toList(),
       );

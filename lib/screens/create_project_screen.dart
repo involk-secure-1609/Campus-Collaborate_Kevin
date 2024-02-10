@@ -1,12 +1,12 @@
 import 'dart:io';
-
+import 'package:campuscollaborate/constants/routing_constants.dart';
 import 'package:campuscollaborate/locator.dart';
 import 'package:campuscollaborate/models/create_project_model.dart';
+import 'package:campuscollaborate/services/contributor_search_screen_service.dart';
 import 'package:campuscollaborate/services/docs_and_images.dart';
 import 'package:campuscollaborate/services/drop_down_services.dart';
 import 'package:campuscollaborate/services/project_services.dart';
 import 'package:campuscollaborate/services/toggle_button_services.dart';
-import 'package:campuscollaborate/services/user_services.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/app_bar.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/common_elevated_button.dart';
 import 'package:campuscollaborate/widgets/createProjectScreen/contributor_with_cross.dart';
@@ -109,22 +109,37 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  'Contributors',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                ),
                 const SizedBox(
                   height: 10,
                 ),
-                const ContributorsWithCrossListView(),
-                AddElevatedButton(
-                  buttonText: 'Add Contributor',
-                  onTap: () {},
-                  prefixImage: Image.asset('assets/button_plus.png'),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+               Consumer<ProjectTypeToggleButtonService>(builder: (context, service, child){
+                 if(service.selectedList[0]){
+                   return const SizedBox(height: 0,);
+                 }
+                 else{
+                   return Column(
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       const Text(
+                         'Contributors',
+                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                       ),
+                       const ContributorsWithCrossListView(),
+                       AddElevatedButton(
+                         buttonText: 'Add Contributor',
+                         onTap: () {
+                           context.read<ContributorSearchScreenService>().clearAllProviders();
+                           navigationService.pushScreen(Routes.contributorSearchScreen);
+                         },
+                         prefixImage: Image.asset('assets/button_plus.png'),
+                       ),
+                       const SizedBox(
+                         height: 10,
+                       ),
+                     ],
+                   );
+                 }
+               }),
                 const Text(
                   'Uploads',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
@@ -209,7 +224,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
                             duration: durationController.text.isEmpty?'New Project':'${durationController.text} ${context.read<DropDownServices>().selectedValue}',
                             isActive: context.read<ProjectStatusToggleButtonService>().selectedList[0],
                             id: '',
-                            admin: [],
+                            admin: context.read<ContributorSearchScreenService>().selectedAdminsList,
                             starBy: null,
                             owner: '',
                             thumbnail: null
@@ -224,6 +239,16 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
         ),
       ),
     ));
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    projectTitleController.dispose();
+    descriptionController.dispose();
+    domainController.dispose();
+    durationController.dispose();
+    multiSelectController.dispose();
   }
 }
 

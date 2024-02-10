@@ -1,12 +1,14 @@
 import 'package:campuscollaborate/constants/themes.dart';
 import 'package:campuscollaborate/models/project.dart';
+import 'package:campuscollaborate/services/project_services.dart';
+import 'package:campuscollaborate/services/user_provider.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/app_bar.dart';
-import 'package:campuscollaborate/widgets/commonWidgets/bottom_nav_bar.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/contributors_container.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/skills_container.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/custom_floating_action_button.dart';
 import 'package:campuscollaborate/widgets/image_collage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProjectScreen extends StatelessWidget {
   final Project project;
@@ -16,9 +18,22 @@ class ProjectScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      floatingActionButton: CustomFloatingActionButton(
-        onPressed: () {},
-        icon: Image.asset('assets/star.png'),
+          floatingActionButton: Consumer<UserProvider>(
+            builder: (context, service, child){
+              return CustomFloatingActionButton(
+              onPressed: () async{
+                print('clicked');
+                if(context.read<UserProvider>().userInfo.starBy!=null&&ifStarByProjectIsContained(context.read<UserProvider>().userInfo.starBy!, project)){
+                  print('inside if');
+                  return;
+                }else{
+                  print(ifStarByProjectIsContained(context.read<UserProvider>().userInfo.starBy!, project));
+                  await ProjectServices().starProject(project.id, context);
+                }
+              },
+              icon:context.read<UserProvider>().userInfo.starBy==null||!ifStarByProjectIsContained(context.read<UserProvider>().userInfo.starBy!, project)?Image.asset('assets/star.png'):Image.asset('assets/filled_star.png')
+          );
+        },
       ),
       appBar: customAppBar(project.projectName),
       body: Padding(
@@ -108,3 +123,13 @@ class ProjectScreen extends StatelessWidget {
     ));
   }
 }
+
+bool ifStarByProjectIsContained(List<Project> list, Project project){
+  for(int i=0; i<list.length; i++){
+    if(list[i].id==project.id){
+      return true;
+    }
+  }
+  return false;
+}
+

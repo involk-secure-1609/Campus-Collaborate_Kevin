@@ -4,7 +4,7 @@ import 'package:campuscollaborate/models/admin.dart';
 import 'package:campuscollaborate/models/project.dart';
 import 'package:campuscollaborate/models/user_info.dart';
 import 'package:campuscollaborate/services/all_project_providers.dart';
-import 'package:campuscollaborate/services/contributor_cross.dart';
+import 'package:campuscollaborate/services/contributor_search_screen_service.dart';
 import 'package:campuscollaborate/services/docs_and_images.dart';
 import 'package:campuscollaborate/services/drop_down_services.dart';
 import 'package:campuscollaborate/services/nav_bar_services.dart';
@@ -45,13 +45,13 @@ void main() async {
       ChangeNotifierProvider(create: (_) => DropDownServices()),
       ChangeNotifierProvider(create: (_) => ProjectStatusToggleButtonService()),
       ChangeNotifierProvider(create: (_) => ProjectTypeToggleButtonService()),
-      ChangeNotifierProvider(create: (_) => ContributorCrossService()),
       ChangeNotifierProvider(create: (_) => DocsStateService()),
       ChangeNotifierProvider(create: (_) => ProjectImageStateService()),
       ChangeNotifierProvider(
         create: (_) => UserProvider(),
       ),
-      ChangeNotifierProvider(create: (_)=>AllProjectsProvider())
+      ChangeNotifierProvider(create: (_)=>AllProjectsProvider(),),
+      ChangeNotifierProvider(create: (_)=>ContributorSearchScreenService())
     ],
     child: const MyApp(),
   ));

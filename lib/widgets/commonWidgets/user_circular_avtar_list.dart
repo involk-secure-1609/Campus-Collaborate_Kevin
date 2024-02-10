@@ -16,7 +16,7 @@ class UserCircularAvatars extends StatelessWidget {
         return Positioned(
             left: index * 15,
             child: CircleAvatar(
-              backgroundImage: admins[index].url == null
+              backgroundImage: admins[index].url == null||admins[index].url!.isEmpty
                   ? imageProvider
                   : NetworkImage(admins[index].url!),
               radius: 15,

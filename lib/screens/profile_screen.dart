@@ -1,3 +1,5 @@
+import 'package:campuscollaborate/constants/routing_constants.dart';
+import 'package:campuscollaborate/locator.dart';
 import 'package:campuscollaborate/models/user_info.dart';
 import 'package:campuscollaborate/screens/edit_profile.dart';
 import 'package:campuscollaborate/services/roll_number_decoder.dart';
@@ -35,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Row(
                       children: [
-                        widget.userInfo.url != null?
+                        widget.userInfo.url != null||widget.userInfo.url!.isNotEmpty?
                         ClipOval(
                           child: Image.network(widget.userInfo.url!,
                             height: 80,
@@ -128,7 +130,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 20,
                 ),
                 CommonGesturizedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      navigationService.pushScreen(Routes.projectListScreen, arguments: widget.userInfo.projects);
+                    },
                     buttonText: const Text(
                       'My Projects',
                       style: TextStyle(
@@ -140,7 +144,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 20,
                 ),
                 CommonGesturizedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      navigationService.pushScreen(Routes.savedProjectListScreen, arguments: widget.userInfo.starBy);
+                    },
                     buttonText: const Text(
                       'Saved Projects',
                       style: TextStyle(
@@ -151,15 +157,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                CommonGesturizedButton(
-                    onPressed: () {},
-                    buttonText: const Text(
-                      'My Reviews',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    )),
               ],
             ),
           ),
