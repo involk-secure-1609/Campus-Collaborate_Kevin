@@ -7,11 +7,14 @@ import 'package:campuscollaborate/widgets/commonWidgets/app_bar.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/contributors_container.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/skills_container.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/custom_floating_action_button.dart';
+import 'package:campuscollaborate/widgets/commonWidgets/snack_bar.dart';
 import 'package:campuscollaborate/widgets/image_collage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:provider/provider.dart';
 
 import '../models/user_info.dart';
+import '../widgets/createProjectScreen/docs_images.dart';
 
 class ProjectScreen extends StatelessWidget {
   final Project project;
@@ -102,6 +105,7 @@ class ProjectScreen extends StatelessWidget {
                 height: 15,
               ),
               SkillListWithoutButton(skillsList: project.skills),
+              const SizedBox(height: 10,),
               project.admin == null || project.admin!.isEmpty
                   ? const SizedBox(
                       height: 0,
@@ -115,9 +119,79 @@ class ProjectScreen extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w700),
                         ),
+                        const SizedBox(height: 10,),
                         ContributorListView(contributorsList: project.admin!)
                       ],
                     ),
+              const SizedBox(
+                height: 10,
+              ),
+              project.docs==null||project.docs!.isEmpty?const SizedBox(height: 0,width: 0,):Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Documents',
+                    style: TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 10,),
+                  Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: project.docs!.map((docs) {
+                        return GestureDetector(
+                          onTap: ()async{
+                            FileDownloader.downloadFile(
+                                url: docs,
+                                onProgress: (string, progress){
+
+                                },
+                                onDownloadCompleted: (String path) {
+                                  ScaffoldMessenger.of(context).showSnackBar(showCommonSnackBar('File downloaded to path: $path'));
+                                },
+                                onDownloadError: (String error) {
+                                  ScaffoldMessenger.of(context).showSnackBar(showCommonSnackBar('Download Error: $error'));
+                                });
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 150,
+                                padding: const EdgeInsets.all(10),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      'assets/docs.png',
+                                      height: 25,
+                                      width: 25,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        docs,
+                                        style: const TextStyle(
+                                            fontSize:  13,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w400),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              )
+                            ],
+                          ),
+                        );
+                      }).toList())
+                ],
+              ),
               const SizedBox(
                 height: 10,
               ),
