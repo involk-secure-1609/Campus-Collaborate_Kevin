@@ -16,6 +16,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ImageProvider imageProvider=AssetImage('assets/circular_user.png');
     final TextEditingController searchTextController = TextEditingController();
     return SafeArea(
         child: Scaffold(
@@ -58,7 +59,7 @@ class HomeScreen extends StatelessWidget {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10, right: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -66,9 +67,9 @@ class HomeScreen extends StatelessWidget {
                     onTap:(){
                       navigationService.pushScreen(Routes.profileScreen, arguments: userInfo);
                     },
-                    child: const CircleAvatar(radius: 45,
-                      backgroundImage: AssetImage('assets/circular_user.png'),
-                      foregroundImage: AssetImage('assets/circular_user.png'),
+                    child: CircleAvatar(radius: 20,
+                      backgroundImage: userInfo.url == null||userInfo.url!.isEmpty?imageProvider:NetworkImage(userInfo.url!),
+                      foregroundImage: userInfo.url == null||userInfo.url!.isEmpty?imageProvider:NetworkImage(userInfo.url!),
                     ),
                   )
                 ],

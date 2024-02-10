@@ -8,6 +8,7 @@ import 'package:campuscollaborate/models/project.dart';
 import 'package:campuscollaborate/services/all_project_providers.dart';
 import 'package:campuscollaborate/services/user_services.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/snack_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,12 @@ class ProjectServices{
           data: bodyToBeSent
       );
       final String id=response.data['_id'];
+      FirebaseFirestore.instance
+          .collection('GroupConversations')
+          .doc(id).set({
+        'groupId':id,
+        'projectName': projectModel.projectName,
+      });
      if(imagePath!=null){
        FormData formData = FormData.fromMap({
          "thumbnail": await MultipartFile.fromFile(imagePath, filename: "image.jpg"),
@@ -36,6 +43,7 @@ class ProjectServices{
            data: docsFormData
        );
      }
+
      await userServices.getCurrentUserDetails(context);
      navigationService.pushScreen(Routes.navBarScreen);
     }catch(e){

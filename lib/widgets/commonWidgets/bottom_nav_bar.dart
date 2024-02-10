@@ -48,14 +48,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
               activeColorPrimary: Colors.black,
               activeColorSecondary: Colors.black,
               inactiveColorPrimary: Colors.black),
-          PersistentBottomNavBarItem(
-              icon: Image.asset('assets/chat.png', width: 32),
-              activeColorPrimary: Colors.black,
-              activeColorSecondary: Colors.black,
-              inactiveColorPrimary: Colors.black)
+          // PersistentBottomNavBarItem(
+          //     icon: Image.asset('assets/chat.png', width: 32),
+          //     activeColorPrimary: Colors.black,
+          //     activeColorSecondary: Colors.black,
+          //     inactiveColorPrimary: Colors.black)
         ],
         controller: controller,
-        screens: [HomeScreen(userInfo: context.read<UserProvider>().userInfo, project: context.read<AllProjectsProvider>().allProjects,),  const CourseReview(), const TestScreen(), DmChatScreen()],
+        screens: [HomeScreen(userInfo: context.read<UserProvider>().userInfo, project: context.read<AllProjectsProvider>().allProjects,),  const CourseReview(), const TestScreen()],
 
       );
     });

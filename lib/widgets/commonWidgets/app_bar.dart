@@ -1,8 +1,9 @@
 import 'package:campuscollaborate/constants/themes.dart';
 import 'package:campuscollaborate/locator.dart';
+import 'package:campuscollaborate/services/user_services.dart';
 import 'package:flutter/material.dart';
 
-PreferredSize customAppBar(String title, {bool vertRequired=true}) {
+PreferredSize customAppBar(String title, {bool vertRequired=false, Widget? action}) {
   return PreferredSize(
     preferredSize: const Size.fromHeight(50),
     child: AppBar(
@@ -22,6 +23,7 @@ PreferredSize customAppBar(String title, {bool vertRequired=true}) {
             const SizedBox(
               width: 10,
             ),
+            action ?? const SizedBox(height: 0, width: 0,),
             Text(
               title,
               style: const TextStyle(
@@ -34,10 +36,16 @@ PreferredSize customAppBar(String title, {bool vertRequired=true}) {
       ),
       actions: [
         vertRequired==true?GestureDetector(
-            child: Icon(
-              Icons.more_vert,
-              color: Themes.getColors(ColorsValues.ORANGE_COLOR),
-              size: 30,
+          onTap: ()async{
+            await UserServices().logOut();
+          },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 5),
+              child: Icon(
+                Icons.logout,
+                color: Themes.getColors(ColorsValues.ORANGE_COLOR),
+                size: 30,
+              ),
             )):const SizedBox(width: 0,)
       ],
       leadingWidth: double.infinity,

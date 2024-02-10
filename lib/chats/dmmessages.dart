@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:campuscollaborate/models/user_info.dart';
+import 'package:campuscollaborate/widgets/commonWidgets/app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +11,10 @@ import 'message_model.dart';
 
 class DmMessageScreen extends StatefulWidget {
   final String groupId;
-  final String user;
+  final UserInfo myInfo;
+  final UserInfo oppInfo;
 
-  DmMessageScreen({required this.groupId, required this.user});
+  DmMessageScreen({super.key, required this.groupId, required this.myInfo, required this.oppInfo, });
 
   @override
   _DmMessageScreen createState() => _DmMessageScreen();
@@ -19,13 +22,15 @@ class DmMessageScreen extends StatefulWidget {
 
 class _DmMessageScreen extends State<DmMessageScreen> {
   late final Stream<QuerySnapshot> messageStream;
-  late final String oppUser;
+  late final UserInfo oppUserInfo;
+  late final UserInfo myUserInfo;
   late final String groupid;
 
   @override
   void initState() {
     super.initState();
-    oppUser = widget.user;
+    oppUserInfo = widget.oppInfo;
+    myUserInfo=widget.myInfo;
     groupid = widget.groupId;
     messageStream = FirebaseFirestore.instance
         .collection('DmConversations')
@@ -43,57 +48,41 @@ class _DmMessageScreen extends State<DmMessageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ImageProvider imageProvider=AssetImage('assets/circular_user.png');
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(85, 85, 85, 1),
-        title: Row(
-          children: [
-            const CircleAvatar(
-              child: Icon(Icons.person), // You can use any icon you prefer
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(oppUser),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: Color.fromRGBO(224, 140, 56, 1),
-            ),
-            onPressed: () {
-              // Handle the action when the three dots icon is pressed
-              print('Three dots icon pressed');
-            },
+      appBar: customAppBar(widget.oppInfo.name, action: Row(
+        children: [
+          const SizedBox(width: 5,),
+          CircleAvatar(radius: 20,
+            backgroundImage: widget.oppInfo.url == null||widget.oppInfo.url!.isEmpty?imageProvider:NetworkImage(widget.oppInfo.url!),
+            foregroundImage: widget.oppInfo.url == null||widget.oppInfo.url!.isEmpty?imageProvider:NetworkImage(widget.oppInfo.url!),
           ),
+          const SizedBox(width: 5,),
         ],
-      ),
+      ),),
       body: Column(
         children: [
           Expanded(
-            child: Container(
+            child: messageStream==null?const SizedBox(height: 0,):Container(
               child: StreamBuilder<QuerySnapshot>(
                 stream: messageStream,
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
-                    return const Text('Something went wrong');
+                    return const Text('');
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Text('Something went wrong');
+                    return const Text('');
                   }
                   return ListView(
                     reverse: true,
                     shrinkWrap: true,
                     controller: scrollController, // Add this line
                     children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                    snapshot.data!.docs.map((DocumentSnapshot document) {
                       Map<String, dynamic> data =
-                          document.data()! as Map<String, dynamic>;
-                      bool isCurrentUser = data['senderId'] == "user1";
+                      document.data()! as Map<String, dynamic>;
+                      bool isCurrentUser = data['senderId'] == myUserInfo.email;
                       return Container(
                         margin: EdgeInsets.symmetric(vertical: 5.0),
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -164,7 +153,7 @@ class _DmMessageScreen extends State<DmMessageScreen> {
                         Message message = Message(
                             message: msg,
                             timeSent: DateTime.timestamp(),
-                            senderId: "user1",
+                            senderId: myUserInfo.email,
                             image: imageUrl);
                         imageUrl='';
                         await databaseProvider.sendMessage(
@@ -241,7 +230,7 @@ class _DmMessageScreen extends State<DmMessageScreen> {
                         Message message = Message(
                             message: msg,
                             timeSent: DateTime.timestamp(),
-                            senderId: "user1",
+                            senderId: myUserInfo.email,
                             image: imageUrl);
                         await databaseProvider.sendMessage(
                             groupId, isGroup, message);

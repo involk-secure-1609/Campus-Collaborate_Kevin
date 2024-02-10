@@ -1,17 +1,21 @@
+import 'package:campuscollaborate/models/project.dart';
+import 'package:campuscollaborate/widgets/commonWidgets/app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import '../models/user_info.dart';
 import 'database_provider.dart';
 import 'message_model.dart';
 
 
 class GroupMessageScreen extends StatefulWidget {
   final String groupId;
-  final String team;
+  final Project team;
+  final UserInfo myInfo;
 
-  GroupMessageScreen({required this.groupId, required this.team});
+  GroupMessageScreen({required this.groupId, required this.team, required this.myInfo});
 
   @override
   _GroupMessageScreen createState() => _GroupMessageScreen();
@@ -26,7 +30,7 @@ class _GroupMessageScreen extends State<GroupMessageScreen> {
   @override
   void initState() {
     super.initState();
-    teamName=widget.team;
+    teamName=widget.team.projectName;
     groupid=widget.groupId;
     _messageStream = FirebaseFirestore.instance
         .collection('GroupConversations')
@@ -44,31 +48,7 @@ class _GroupMessageScreen extends State<GroupMessageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(85, 85, 85, 1),
-        title: Row(
-          children: [
-            CircleAvatar(
-              child: Icon(Icons.group), // You can use any icon you prefer
-            ),
-            SizedBox(width: 10,),
-            Text(teamName),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: Color.fromRGBO(224, 140, 56, 1),
-            ),
-            onPressed: () {
-              // Handle the action when the three dots icon is pressed
-              print('Three dots icon pressed');
-            },
-          ),
-        ],
-      ),
+      appBar: customAppBar(widget.team.projectName),
       body: Column(
         children: [
           Expanded(
@@ -78,10 +58,10 @@ class _GroupMessageScreen extends State<GroupMessageScreen> {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
-                    return Text('Something went wrong');
+                    return Text('');
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Text('Something went wrong');
+                    return const Text('');
                   }
                   return ListView(
                     reverse: true,
@@ -91,7 +71,7 @@ class _GroupMessageScreen extends State<GroupMessageScreen> {
                     snapshot.data!.docs.map((DocumentSnapshot document) {
                       Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
-                      bool isCurrentUser = data['senderId'] == "user1";
+                      bool isCurrentUser = data['senderId'] == widget.myInfo.email;
                       return Container(
                         margin: EdgeInsets.symmetric(vertical: 5.0),
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -162,7 +142,7 @@ class _GroupMessageScreen extends State<GroupMessageScreen> {
                         Message message = Message(
                             message: "",
                             timeSent: DateTime.timestamp(),
-                            senderId: "user1",
+                            senderId: widget.myInfo.email,
                             image: imageUrl);
                         imageUrl='';
                         await databaseProvider.sendMessage(
@@ -239,7 +219,7 @@ class _GroupMessageScreen extends State<GroupMessageScreen> {
                         Message message = Message(
                             message: msg,
                             timeSent: DateTime.timestamp(),
-                            senderId: "user1",
+                            senderId: widget.myInfo.email,
                             image: ""
                         );
                         await databaseProvider.sendMessage(

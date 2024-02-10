@@ -1,3 +1,4 @@
+import 'package:campuscollaborate/chats/groupmessages.dart';
 import 'package:campuscollaborate/constants/themes.dart';
 import 'package:campuscollaborate/models/project.dart';
 import 'package:campuscollaborate/services/project_services.dart';
@@ -9,6 +10,8 @@ import 'package:campuscollaborate/widgets/commonWidgets/custom_floating_action_b
 import 'package:campuscollaborate/widgets/image_collage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../models/user_info.dart';
 
 class ProjectScreen extends StatelessWidget {
   final Project project;
@@ -22,12 +25,9 @@ class ProjectScreen extends StatelessWidget {
             builder: (context, service, child){
               return CustomFloatingActionButton(
               onPressed: () async{
-                print('clicked');
                 if(context.read<UserProvider>().userInfo.starBy!=null&&ifStarByProjectIsContained(context.read<UserProvider>().userInfo.starBy!, project)){
-                  print('inside if');
                   return;
                 }else{
-                  print(ifStarByProjectIsContained(context.read<UserProvider>().userInfo.starBy!, project));
                   await ProjectServices().starProject(project.id, context);
                 }
               },
@@ -70,6 +70,16 @@ class ProjectScreen extends StatelessWidget {
                     ],
                   ),
                   GestureDetector(
+                    onTap: (){
+                      final String chatId= project.id;
+                      final UserInfo myUserInfo=context.read<UserProvider>().userInfo;
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => GroupMessageScreen(groupId: chatId, myInfo: myUserInfo, team: project,)
+                        ),
+                      );
+                    },
                     child: Container(
                       alignment: Alignment.center,
                       height: 50,
@@ -80,7 +90,7 @@ class ProjectScreen extends StatelessWidget {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(20))),
                       child: Image.asset(
-                        'assets/share_button.png',
+                        'assets/chat_bubble.png',
                         height: 25,
                         width: 25,
                       ),

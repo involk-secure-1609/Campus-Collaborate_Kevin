@@ -1,10 +1,15 @@
+import 'package:campuscollaborate/chats/dmmessages.dart';
 import 'package:campuscollaborate/constants/routing_constants.dart';
 import 'package:campuscollaborate/locator.dart';
 import 'package:campuscollaborate/models/user_info.dart';
+import 'package:campuscollaborate/services/user_provider.dart';
 import 'package:campuscollaborate/services/user_services.dart';
 import 'package:campuscollaborate/widgets/commonWidgets/bottom_nav_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../chats/database_provider.dart';
 import '../services/roll_number_decoder.dart';
 import '../widgets/commonWidgets/app_bar.dart';
 import '../widgets/commonWidgets/common_container.dart';
@@ -21,6 +26,8 @@ class OtherUserProfileScreen extends StatefulWidget {
 
 class _OtherUserProfileScreenState extends State<OtherUserProfileScreen> {
   @override
+  DatabaseProvider databaseProvider = DatabaseProvider();
+
   Widget build(BuildContext context) {
     final RollNumberDecoder rollNumberDecoder =
         RollNumberDecoder(rollNumber: int.parse(widget.userInfo.rollNumber));
@@ -80,6 +87,39 @@ class _OtherUserProfileScreenState extends State<OtherUserProfileScreen> {
                       ],
                     ),
                     GestureDetector(
+                      onTap: () async{
+                        final UserInfo myUserInfo=context.read<UserProvider>().userInfo;
+                        String email1=myUserInfo.email;
+                        String email2=widget.userInfo.email;
+                        String chatId=email1+email2;
+                        FirebaseFirestore.instance
+                            .collection('DmConversations')
+                            .doc(chatId).set({
+                          'user1':myUserInfo.email,
+                          'user2':widget.userInfo.email,
+                        });
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DmMessageScreen(groupId: chatId, myInfo: myUserInfo, oppInfo: widget.userInfo,)
+                          ),
+                        );
+                        // Handle the action when the three dots icon is pressed
+                        print('Three dots icon pressed');
+                      },
+                      // onTap: ()async {
+                      //   final UserInfo myUserInfo=context.read<UserProvider>().userInfo;
+                      //   String email1=myUserInfo.email;
+                      //   String email2=widget.userInfo.email;
+                      //   String chatId=email1+email2;
+                      //    FirebaseFirestore.instance
+                      //       .collection('DmConversations')
+                      //       .doc(chatId).set({
+                      //      'user1':myUserInfo.email,
+                      //      'user2':widget.userInfo.email,
+                      //    });
+                      //    Navigator.push(DmMessageScreen(groupId: chatId, myInfo: myUserInfo, oppInfo: widget.userInfo,));
+                      // },
                       child: Column(
                         children: [
                           Image.asset(

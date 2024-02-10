@@ -25,7 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return SafeArea(
       child: Scaffold(
         extendBody: true,
-        appBar: customAppBar('Profile'),
+        appBar: customAppBar('Profile', vertRequired: true),
         body: SingleChildScrollView(
           child: Padding(
             padding:
@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Row(
                       children: [
-                        widget.userInfo.url != null||widget.userInfo.url!.isNotEmpty?
+                        widget.userInfo.url != null&&widget.userInfo.url!.isNotEmpty?
                         ClipOval(
                           child: Image.network(widget.userInfo.url!,
                             height: 80,
