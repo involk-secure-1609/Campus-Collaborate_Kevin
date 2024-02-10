@@ -110,6 +110,6 @@ class UserServices {
     await accessTokenBox.delete(accessTokenKey);
     await loggedInBox.delete(loggedInKey);
     token='';
-    navigationService.popAndPushScreen(Routes.loginScreen);
+    navigationService.removeAllAndPush(Routes.loginScreen, Routes.profileScreen);
   }
 }
