@@ -1,9 +1,10 @@
 # Campus Collaborate
 
-This is a dynamic collaborative platform designed for college students to showcase their projects, foster meaningful collaborations, and connect with like-minded peers. Whether you are working on innovative software applications, groundbreaking research projects, or creative endeavors, our platform provides a vibrant space for you to share your work, collaborate with others, and explore a diverse range of projects within the college community.
+- This is a dynamic collaborative platform designed for college students to showcase their projects, foster meaningful collaborations, and connect with like-minded peers. 
+- Whether you are working on innovative software applications, groundbreaking research projects, or creative endeavors, our platform provides a vibrant space for you to share your work, collaborate with others, and explore a diverse range of projects within the college community.
 
 # Description
-
+- 
 
 # Tech-Stack Used
 - [Flutter](https://flutter.dev/) - As the framework for building the frontend.
@@ -17,6 +18,7 @@ This is a dynamic collaborative platform designed for college students to showca
 
 **Login Page:**
 ![Capture](https://github.com/involk-secure-1609/Campus-Collaborate_Kevin/assets/133996079/2e6e8474-b138-4bb3-a164-edeab2a21a77)
+
 
 **View Projects Page**
 ![WhatsApp Image 2024-06-26 at 23 22 41 (2)](https://github.com/involk-secure-1609/Campus-Collaborate_Kevin/assets/133996079/ddd3709a-056f-47e1-aaa1-c7cc98280562)
