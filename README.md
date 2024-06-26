@@ -15,7 +15,7 @@ This is a dynamic collaborative platform designed for college students to showca
 
 # Design of Pages
 
-**Login Page**
+**Login Page:**
 ![WhatsApp Image 2024-06-26 at 23 22 42](https://github.com/involk-secure-1609/Campus-Collaborate_Kevin/assets/133996079/47d7f57c-f71b-4bf7-ac62-55f41aa6802a)
 
 **View Projects Page**
