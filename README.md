@@ -9,7 +9,9 @@ This website provides college students a platform to collaborate and showcase th
 Enable students to post details about their projects, including descriptions, objectives, technologies used, and outcomes. Include multimedia support for images, videos, and documents to provide a comprehensive view of the projects.
 
 # Tech-Stack Used
-- Create a new branch (`git checkout -b feature-branch`)
-- Commit your changes (`git commit -m 'Add some feature'`)
-- Push to the branch (`git push origin feature-branch`)
-- Open a pull request
+-[Flutter](https://flutter.dev/) - As the framework for building the frontend.
+-[ExpressJs](https://expressjs.com/)) - As a Database.
+-[MongoDb](https://www.mongodb.com/) - As the Web Framework.
+-[NodeJs](https://nodejs.org/en) - As the Server Framework.
+
+# Design of Pages
