@@ -17,5 +17,5 @@
 # Design of Pages
 
 **Login Page:**
-![Screenshot from 2024-07-01 05-16-10](https://github.com/involk-secure-1609/Campus-Collaborate_Kevin/assets/133996079/5041890e-c41e-44f4-909b-c5e9d573596f)
+![Screenshot from 2024-07-01 05-23-00](https://github.com/involk-secure-1609/Campus-Collaborate_Kevin/assets/133996079/f51851bc-6ef7-4956-a46e-93f917c7c2fa)
 
