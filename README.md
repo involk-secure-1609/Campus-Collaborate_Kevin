@@ -4,7 +4,11 @@
 - Whether you are working on innovative software applications, groundbreaking research projects, or creative endeavors, our platform provides a vibrant space for you to share your work, collaborate with others, and explore a diverse range of projects within the college community.
 
 # Description
-- 
+- Developed and deployed a Flutter/Dart mobile application integrated with a Node.js/Express.js backend server, to facilitate collaboration on various projects and enable connections among like-minded peers on campus.
+- Made use of the realtime capabilities of Cloud Firestore for enabling Real Time Messaging between users, ImageKit for the storage of images and videos and
+  Cloudinary for storing files.
+- Made use of Microsoft Graph Api for the authentification of users 
+- Utilized Google Perspective API which uses Machine Learning to detect toxic messages and moderate conversations.
 
 # Tech-Stack Used
 - [Flutter](https://flutter.dev/) - As the framework for building the frontend.
@@ -12,8 +16,8 @@
 - [ExpressJs](https://expressjs.com/)) - As a Web Framework.
 - [NodeJs](https://nodejs.org/en) - As the Server Framework.
 - [MongoDb](https://www.mongodb.com/) - As a Database for storing User,Project and Course Models.
- 
-
+ -[Google Perspective Api](https://www.perspectiveapi.com/) - As an Api which detects toxicity in messages.
+  
 # Design of Pages
 
 **Login Page:**
