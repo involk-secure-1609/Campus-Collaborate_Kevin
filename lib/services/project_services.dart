@@ -37,7 +37,8 @@ class ProjectServices{
            data: formData
        );
      }
-     if(docs!=null&&docs.isNotEmpty){
+     if(docs!=null&&docs.isNotEmpty)
+     {
        final FormData docsFormData = await projectModel.getDocsFormData(docs, id);
        final docsResponse =await dio.post('$globalApiPoint${projectEndPoint}addDocs',
            data: docsFormData

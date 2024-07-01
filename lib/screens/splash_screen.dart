@@ -22,13 +22,16 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
   final UserServices userServices=UserServices();
-  void getDetails()async{
+  void getDetails()async
+  {
     final bool loggedIn=await GetUserDetailsServices.userLoggedIn();
     final ProjectServices projectServices = ProjectServices();
-    if(loggedIn==false){
+    if(loggedIn==false)
+    {
       navigationService.pushScreen(Routes.loginScreen);
     }
-    else{
+    else
+    {
       token= await GetUserDetailsServices.accessToken();
       await userServices.getCurrentUserDetails(context);
       await projectServices.getAllProjects(context);

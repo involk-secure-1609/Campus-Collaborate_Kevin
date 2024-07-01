@@ -1,26 +1,20 @@
+import 'package:campuscollaborate/models/comment_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../chats/comment_model.dart';
 import '../chats/database_provider.dart';
+import '../widgets/commonWidgets/app_bar.dart';
 import '../widgets/commonWidgets/common_container.dart';
 import '../widgets/commonWidgets/skills_container.dart';
 
 class CourseReviewComments extends StatefulWidget {
-  final String title;
-  final String course;
-  final String review;
-  final String user;
-  final String comments_size;
+ final CourseReviewComment comment;
 
   const CourseReviewComments(
       {super.key,
-      required this.title,
-      required this.course,
-      required this.review,
-      required this.user,
-      required this.comments_size});
+       required this.comment});
 
   @override
   State<CourseReviewComments> createState() => _CourseReviewComments();
@@ -37,14 +31,14 @@ class _CourseReviewComments extends State<CourseReviewComments> {
   void initState() {
     super.initState();
     comment_stream = FirebaseFirestore.instance
-        .collection('CourseReviewComments')
-        .doc('PH3LGMJWduVZVo9R3ewQ')
+        .collection('CourseReviewss')
+        .doc(widget.comment.id)
         .collection('comments')
         .snapshots();
-    review_course = widget.course;
-    review_message = widget.review;
-    review_title = widget.title;
-    review_user = widget.user;
+    review_course = widget.comment.course;
+    review_message = widget.comment.review;
+    review_title = widget.comment.title;
+    review_user = widget.comment.user;
   }
   DatabaseProvider databaseProvider = DatabaseProvider();
   TextEditingController textController = TextEditingController();
@@ -53,6 +47,7 @@ class _CourseReviewComments extends State<CourseReviewComments> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: customAppBar('Review Comments'),
         backgroundColor: Colors.black,
         body: SingleChildScrollView(
           child: Padding(
@@ -61,13 +56,23 @@ class _CourseReviewComments extends State<CourseReviewComments> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Text(
+                  'Course Code',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 10),
                 SkillContainer(
                   skill: review_course,
                   fontSize: 12,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
+                const Text(
+                  'Review Title',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 5),
                 Text(
-                  review_title,
+                  review_title.toUpperCase(),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -77,6 +82,11 @@ class _CourseReviewComments extends State<CourseReviewComments> {
                   ),
                 ),
                 const SizedBox(height: 10),
+                const Text(
+                  'Reviewer',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 5),
                 Row(
                   children: [
                     Image.asset(
@@ -98,6 +108,11 @@ class _CourseReviewComments extends State<CourseReviewComments> {
                   ],
                 ),
                 const SizedBox(height: 10),
+                const Text(
+                  'Review',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 10),
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.white), // White border
@@ -113,11 +128,10 @@ class _CourseReviewComments extends State<CourseReviewComments> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
-                const Icon(
-                  Icons.comment_outlined,
-                  size: 26,
-                  color: Color.fromRGBO(224, 140, 56, 1),
+                const SizedBox(height: 20),
+                const Text(
+                  'Comments',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 ),
                 StreamBuilder<QuerySnapshot>(
                   stream: comment_stream,
@@ -178,6 +192,7 @@ class _CourseReviewComments extends State<CourseReviewComments> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          heroTag: UniqueKey(),
           onPressed: () {
             showDialog(
               context: context,
@@ -227,9 +242,9 @@ class _CourseReviewComments extends State<CourseReviewComments> {
                             textController.clear();
                             Comment comment1=Comment(
                               comment:comment,
-                              senderId:"Kevin Jacob"
+                              senderId:widget.comment.user,
                             );
-                            await databaseProvider.sendComments("PH3LGMJWduVZVo9R3ewQ", false, comment1);
+                            await databaseProvider.sendComments(widget.comment.id, false, comment1);
                             Navigator.of(context).pop();
                           },
                           child: const Text(

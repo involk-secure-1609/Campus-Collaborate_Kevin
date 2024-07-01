@@ -18,6 +18,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ImageProvider imageProvider=AssetImage('assets/circular_user.png');
     final TextEditingController searchTextController = TextEditingController();
+
+
     return SafeArea(
         child: Scaffold(
           floatingActionButton: Padding(
@@ -35,49 +37,77 @@ class HomeScreen extends StatelessWidget {
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(70),
             child: AppBar(
-              backgroundColor: Themes.getColors(ColorsValues.DARK_GREY_COLOR),
-              title: Padding(
-              padding: const EdgeInsets.only(top: 10), child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Text(
-                  'Campus',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700),
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF1E1E1E), Color(0xFF333333)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                 ),
-                Text(
-                  'Collab',
-                  style: TextStyle(
-                      color: Themes.getColors(ColorsValues.ORANGE_COLOR),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700),
+              ),
+              elevation: 10,
+              shadowColor: Colors.black.withOpacity(0.5),
+              title: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Campus',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w800,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 3.0,
+                            color: Colors.black54,
+                            offset: Offset(1, 1),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      'Collab',
+                      style: TextStyle(
+                        color: Themes.getColors(ColorsValues.ORANGE_COLOR),
+                        fontSize: 24,
+                        fontWeight: FontWeight.w800,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 3.0,
+                            color: Colors.black54,
+                            offset: Offset(1, 1),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              centerTitle: true,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, right: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      navigationService.pushScreen(Routes.profileScreen, arguments: userInfo);
+                    },
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundImage: userInfo.url == null || userInfo.url!.isEmpty
+                          ? imageProvider
+                          : NetworkImage(userInfo.url!) as ImageProvider,
+                      foregroundImage: userInfo.url == null || userInfo.url!.isEmpty
+                          ? imageProvider
+                          : NetworkImage(userInfo.url!),
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10, right: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap:(){
-                      navigationService.pushScreen(Routes.profileScreen, arguments: userInfo);
-                    },
-                    child: CircleAvatar(radius: 20,
-                      backgroundImage: userInfo.url == null||userInfo.url!.isEmpty?imageProvider:NetworkImage(userInfo.url!),
-                      foregroundImage: userInfo.url == null||userInfo.url!.isEmpty?imageProvider:NetworkImage(userInfo.url!),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 0),
         child: Column(
@@ -90,14 +120,24 @@ class HomeScreen extends StatelessWidget {
             const Text(
               'My Feed',
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500),
+                color: Colors.white,
+                fontSize: 24, // Increased font size for better visibility
+                fontWeight: FontWeight.w700, // Increased weight for emphasis
+                letterSpacing: 1.2, // Added letter spacing for a cleaner look
+                shadows: [
+                  Shadow(
+                    blurRadius: 3.0,
+                    color: Colors.black45,
+                    offset: Offset(1, 1),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
               height: 20,
             ),
             CommonTextField(
+              // searchFocusNode: searchFocusNode,
               textEditingController: searchTextController,
               hintText: "Search Project",
               suffix: Image.asset('assets/funnel.png'),

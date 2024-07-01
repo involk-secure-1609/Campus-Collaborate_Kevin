@@ -51,7 +51,8 @@ class ContributorSearchScreen extends StatelessWidget {
               ),
               Consumer<ContributorSearchScreenService>(
                 builder: (context, service, child){
-                  if(!service.searchClicked){
+                  if(!service.searchClicked)
+                  {
                     return const Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,

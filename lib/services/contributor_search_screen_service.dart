@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
-
 import '../models/admin.dart';
 
-class ContributorSearchScreenService extends ChangeNotifier{
+
+class ContributorSearchScreenService extends ChangeNotifier
+{
   bool _searchClicked=false;
   List<Admin> _searchedUsers=[];
   bool _dataFetched=false;
   Admin? _selectedAdmin;
   final List<Admin> _selectedAdminsList=[];
-  void setSearchingAsTrue(){
+
+  void setSearchingAsTrue()
+  {
     _searchClicked=true;
     notifyListeners();
   }
 
-  void setSearchingAsFalse(){
+  void setSearchingAsFalse()
+  {
     _searchClicked=false;
     notifyListeners();
   }
 
-  void clearFetchedDataList(){
+  void clearFetchedDataList()
+  {
     _searchedUsers.clear();
     notifyListeners();
   }
@@ -29,7 +34,8 @@ class ContributorSearchScreenService extends ChangeNotifier{
     notifyListeners();
   }
 
-  void addSelectedAdmin(Admin admin){
+  void addSelectedAdmin(Admin admin)
+  {
     _selectedAdminsList.add(admin);
     notifyListeners();
   }

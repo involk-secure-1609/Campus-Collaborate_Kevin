@@ -33,7 +33,7 @@ class DatabaseProvider {
       CollectionReference comments = docRef.collection("comments");
       await comments.add(comment.toJson());
     } else {
-      CollectionReference collectionRef = db.collection("CourseReviewComments");
+      CollectionReference collectionRef = db.collection("CourseReviewss");
       DocumentReference docRef = collectionRef.doc(docId);
       CollectionReference comments = docRef.collection("comments");
       await comments.add(comment.toJson());
@@ -66,9 +66,9 @@ class DatabaseProvider {
     DocumentReference dbRef = collectionRef.doc(groupId);
     CollectionReference messages = dbRef.collection('messages');
 
-    return messages.snapshots().map((QuerySnapshot querySnapshot) {
+    return messages.snapshots().map((QuerySnapshot querySnapshot)
+    {
       List<Message> messageList = [];
-
       for (QueryDocumentSnapshot doc in querySnapshot.docs) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         // Assuming you have a constructor in your Message class that accepts a map
