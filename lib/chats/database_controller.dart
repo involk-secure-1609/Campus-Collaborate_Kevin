@@ -13,7 +13,6 @@ class DatabaseProviderNotifier extends ChangeNotifier {
   }
 
   Future<void> createDmConversation(String user1, String user2) async {
-
     notifyListeners();
   }
 

@@ -17,6 +17,7 @@ import 'package:async/async.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 class UserServices {
+
   Future<UserInfo> getCurrentUserDetails(BuildContext context) async {
     try {
       final response = await dio.get('$globalApiPoint${userEndPoint}userById');

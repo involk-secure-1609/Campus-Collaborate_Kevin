@@ -23,9 +23,9 @@ class CustomToggleButton extends StatelessWidget {
       fillColor: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
       borderRadius: const BorderRadius.all(Radius.circular(25)),
       selectedBorderColor: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),
-      constraints: const BoxConstraints(
+      constraints:  BoxConstraints(
         minHeight: 40,
-        minWidth: 160,
+        minWidth: MediaQuery.of(context).size.width * 0.4,
       ),
       borderWidth: 2,
       borderColor: Themes.getColors(ColorsValues.LIGHT_GREY_COLOR),

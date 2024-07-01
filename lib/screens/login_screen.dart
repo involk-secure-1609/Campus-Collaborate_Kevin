@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 40),
+            const SizedBox(height: 120),
             Container(
               alignment: Alignment.topCenter,
               child: RichText(
@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 50),
             GestureDetector(
               onTap: ()async{
                 await authenticationServices.loginAuthenticate();
@@ -184,61 +184,61 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            Container(
-              alignment: Alignment.topCenter,
-              child: RichText(
-                text: const TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'OR',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // Container(
+            //   alignment: Alignment.topCenter,
+            //   child: RichText(
+            //     text: const TextSpan(
+            //       children: [
+            //         TextSpan(
+            //           text: 'OR',
+            //           style: TextStyle(
+            //             fontSize: 20,
+            //             fontWeight: FontWeight.w500,
+            //             color: Colors.white,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 10),
-            Container(
-              alignment: Alignment.topCenter,
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: 'Continue ',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const TextSpan(
-                      text: 'As ',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                      ),
-                    ),
-                    TextSpan(
-                        text: 'Guest',
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          decoration: TextDecoration.underline,
-                          color: Color.fromRGBO(234, 140, 56, 1),
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            print('Privacy Policy"');
-                          }),
-                  ],
-                ),
-              ),
-            ),
+            // Container(
+            //   alignment: Alignment.topCenter,
+            //   child: RichText(
+            //     text: TextSpan(
+            //       children: [
+            //         const TextSpan(
+            //           text: 'Continue ',
+            //           style: TextStyle(
+            //             fontSize: 15,
+            //             fontWeight: FontWeight.w400,
+            //             color: Colors.white,
+            //           ),
+            //         ),
+            //         const TextSpan(
+            //           text: 'As ',
+            //           style: TextStyle(
+            //             fontSize: 15,
+            //             fontWeight: FontWeight.w400,
+            //             color: Colors.white,
+            //           ),
+            //         ),
+            //         // TextSpan(
+            //         //     text: 'Guest',
+            //         //     style: const TextStyle(
+            //         //       fontSize: 15,
+            //         //       fontWeight: FontWeight.w400,
+            //         //       decoration: TextDecoration.underline,
+            //         //       color: Color.fromRGBO(234, 140, 56, 1),
+            //         //     ),
+            //         //     recognizer: TapGestureRecognizer()
+            //         //       ..onTap = () {
+            //         //         print('Privacy Policy"');
+            //         //       }),
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

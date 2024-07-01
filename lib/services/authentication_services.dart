@@ -10,7 +10,8 @@ class AuthenticationServices{
      final result = await FlutterWebAuth.authenticate(
          url: outlookAuthenticationLogin, callbackUrlScheme: "campuscollaborate");
      final String? accessToken = Uri.parse(result).queryParameters['token'];
-     if(accessToken==null){
+     if(accessToken==null)
+     {
        throw ("Access Token or User not found");
      }
      await accessTokenBox.put(accessTokenKey, accessToken);

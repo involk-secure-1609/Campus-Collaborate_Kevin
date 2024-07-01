@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-class DocsStateService extends ChangeNotifier {
-  List<File> _docs = [];
+class DocsStateService extends ChangeNotifier
+{
 
-  void addDocs(List<File> docs) {
+  List<File> _docs = [];
+  void addDocs(List<File> docs)
+  {
     _docs=docs;
     notifyListeners();
   }

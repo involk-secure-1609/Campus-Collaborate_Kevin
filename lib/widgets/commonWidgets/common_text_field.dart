@@ -15,6 +15,7 @@ class CommonTextField extends StatelessWidget {
   const CommonTextField(
       {super.key,
       required this.textEditingController,
+        // required this.searchFocusNode,
       required this.hintText,
         this.backgroundColor,
         this.width,
@@ -36,6 +37,7 @@ class CommonTextField extends StatelessWidget {
       ),
       child: TextField(
         controller: textEditingController,
+        // focusNode: searchFocusNode,
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(10),
             hintText: hintText,

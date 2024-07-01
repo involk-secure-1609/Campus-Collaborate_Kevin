@@ -1,17 +1,22 @@
 
 import 'package:campuscollaborate/constants/routing_constants.dart';
+import 'package:campuscollaborate/models/comment_model.dart';
 import 'package:campuscollaborate/models/project.dart';
 import 'package:campuscollaborate/models/user_info.dart';
 import 'package:campuscollaborate/screens/bottom_nav_bar_screen.dart';
 import 'package:campuscollaborate/screens/contributor_search_screen.dart';
+import 'package:campuscollaborate/screens/course_review_comments.dart';
+import 'package:campuscollaborate/screens/course_review_screen.dart';
 import 'package:campuscollaborate/screens/create_project_screen.dart';
 import 'package:campuscollaborate/screens/home_screen.dart';
 import 'package:campuscollaborate/screens/login_screen.dart';
+import 'package:campuscollaborate/screens/new_course_review_screen.dart';
 import 'package:campuscollaborate/screens/other_user_profile_screen.dart';
 import 'package:campuscollaborate/screens/profile_screen.dart';
 import 'package:campuscollaborate/screens/project_list_screen.dart';
 import 'package:campuscollaborate/screens/project_screen.dart';
 import 'package:campuscollaborate/screens/splash_screen.dart';
+import 'package:campuscollaborate/screens/synergy_screen.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -48,6 +53,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case Routes.otherUserProfileSplashScreen:
       final id = settings.arguments as String;
       return MaterialPageRoute(builder: (context)=>ProfileScreenSplash(userId: id));
+    case Routes.createCourseReviewScreen:
+      return MaterialPageRoute(builder: (context)=>NewCourseReviewScreen());
+    case Routes.createCourseReviewScreen:
+      return MaterialPageRoute(builder: (context)=>CourseReviewScreen());
+    case Routes.viewCourseReviewCommentsScreen:
+      final comment=settings.arguments as CourseReviewComment;
+      return MaterialPageRoute(builder: (context)=>CourseReviewComments(comment: comment,));
+    case Routes.synergyScreen:
+      return MaterialPageRoute(builder: (context)=>SynergyScreen());
     default:
       return MaterialPageRoute(builder: (context) => const ErrorScreen());
   }

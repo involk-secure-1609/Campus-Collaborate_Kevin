@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import '../constants/routing_constants.dart';
+import '../locator.dart';
+import '../models/comment_model.dart';
 import '../screens/course_review_comments.dart';
 import 'commonWidgets/common_container.dart';
 import 'commonWidgets/skills_container.dart';
@@ -9,126 +11,102 @@ class CourseReviewContainer extends StatelessWidget {
   final String course;
   final String review;
   final String user;
-  final String comments_size;
-  final String rating;
+  final String id;
+  final String email;
 
-  const CourseReviewContainer(
-      {super.key,
-      required this.title,
-      required this.course,
-      required this.review,
-      required this.user,
-      required this.comments_size,
-      required this.rating});
+  const CourseReviewContainer({
+    super.key,
+    required this.title,
+    required this.course,
+    required this.review,
+    required this.user,
+    required this.id,
+    required this.email,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-      // Navigate to the CourseReviewScreen
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => CourseReviewComments(title: title, course: course, review: review, user: user, comments_size: comments_size)),
-      );
-    },
+        navigationService.pushScreen(Routes.viewCourseReviewCommentsScreen,
+            arguments: CourseReviewComment(
+                id: id, course: course, review: review, email: email, title: title, user: user));
+      },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: CommonContainer(
-          children: [
-            SkillContainer(skill: course),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Color.fromRGBO(238, 238, 238, 1),
-              ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Row(
+        padding: const EdgeInsets.all(12.0),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          elevation: 5,
+          color: const Color(0xFF333333), // Darker background for card
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  'assets/circular_user.png',
-                  height: 15,
-                  width: 15,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
+                SkillContainer(skill: course),
+                const SizedBox(height: 12),
                 Text(
-                  user,
+                  title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 12,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(238, 238, 238, 1),
+                    color: Colors.white,
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              review,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Color.fromRGBO(238, 238, 238, 1),
-              ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Row(
-              children: [
-                GestureDetector(
-                  child: const Icon(
-                    Icons.keyboard_double_arrow_up_sharp,
-                    size: 25,
-                    color: Colors.green,
-                  ),
-                  onTap: (){},
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/circular_user.png',
+                      height: 20,
+                      width: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      user,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
-                GestureDetector(
-                  child: const Icon(
-                    Icons.keyboard_double_arrow_down_sharp,
-                    size: 25,
-                    color: Colors.red,
-                  ),
-                  onTap: (){},
-                ),
-                const SizedBox(
-                  width: 130,
-                ),
+                const SizedBox(height: 12),
                 Text(
-                  comments_size,
+                  review,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 14,
-                    color: Color.fromRGBO(238, 238, 238, 1),
+                    color: Colors.white,
                   ),
                 ),
-                const SizedBox(
-                  width: 2,
-                ),
-                Image.asset(
-                  'assets/comment_bubble.png',
-                  height: 16,
-                  width: 16,
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Text(
+                      'comments',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Icon(
+                      Icons.comment,
+                      color: Colors.white70,
+                      size: 16,
+                    ),
+                  ],
                 ),
               ],
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );

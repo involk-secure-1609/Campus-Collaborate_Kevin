@@ -64,7 +64,8 @@ class _DmMessageScreen extends State<DmMessageScreen> {
         children: [
           Expanded(
             child: messageStream==null?const SizedBox(height: 0,):Container(
-              child: StreamBuilder<QuerySnapshot>(
+              child: StreamBuilder<QuerySnapshot>
+                (
                 stream: messageStream,
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Themes {
   static final theme = ThemeData(
-    scaffoldBackgroundColor: const Color.fromRGBO(35, 33, 38, 1),
+    scaffoldBackgroundColor: const Color.fromRGBO(0, 0, 0, 1),
     primaryColor: const Color.fromRGBO(125, 125, 125, 1),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: Themes.getColors(ColorsValues.ORANGE_COLOR)),

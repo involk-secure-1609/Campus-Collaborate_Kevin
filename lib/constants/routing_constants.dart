@@ -11,4 +11,8 @@ class Routes {
   static const String savedProjectListScreen = "saved-project-list-screen";
   static const String otherUserProfileScreen = "other-user-profile-screen";
   static const String otherUserProfileSplashScreen = "other-user-profile-splash-screen";
+  static const String createCourseReviewScreen = "create-course-review-screen";
+  static const String viewCourseReviewScreen = "view-course-review-screen";
+  static const String viewCourseReviewCommentsScreen="view-course-review-comments-screen";
+  static const String synergyScreen="view-synergy-screen";
 }
