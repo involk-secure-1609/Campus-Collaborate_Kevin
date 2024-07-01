@@ -19,3 +19,17 @@
 **Login Page:**
 ![Screenshot from 2024-07-01 05-23-00](https://github.com/involk-secure-1609/Campus-Collaborate_Kevin/assets/133996079/f51851bc-6ef7-4956-a46e-93f917c7c2fa)
 
+**Profile Page:**
+![Screenshot from 2024-07-01 05-24-15](https://github.com/involk-secure-1609/Campus-Collaborate_Kevin/assets/133996079/4e2e43ab-3a13-44cb-a45a-8bf1a6cac3dc)
+
+**Home Page:**
+![Screenshot from 2024-07-01 05-24-01](https://github.com/involk-secure-1609/Campus-Collaborate_Kevin/assets/133996079/1c4eb944-1f18-4df8-b6d5-905f2b13e517)
+
+**Project Page:**
+![Screenshot from 2024-07-01 05-24-55](https://github.com/involk-secure-1609/Campus-Collaborate_Kevin/assets/133996079/4e147185-9709-4b14-b951-5b92f6bcca76)
+
+**New Project Page:**
+![Screenshot from 2024-07-01 05-24-33](https://github.com/involk-secure-1609/Campus-Collaborate_Kevin/assets/133996079/58ad4e7a-5a54-4984-8745-52d0d031b5e9)
+
+**Course Review Page:**
+![Screenshot from 2024-07-01 05-24-45](https://github.com/involk-secure-1609/Campus-Collaborate_Kevin/assets/133996079/a4be0553-03b7-4307-a351-f19e7c35edda)
